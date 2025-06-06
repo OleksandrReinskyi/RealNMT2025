@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/static/CSS/header.css">
+    <link rel="stylesheet" href="/static/CSS/footer.css">
+    <link rel="stylesheet" href="/static/CSS/global.css">
+
+    {% if page.css %}
+        {% for file in page.css %}
+            <link rel="stylesheet" href="{{file}}">
+        {% endfor %}
+    {% endif %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+</head>
+<body>
+{% include header.html %}
+    {{content}}
+
+{% include footer.html %}
+{% if page.js %}
+    {% for file in page.js %}
+        <script defer src="{{file}}"></script>
+    {% endfor %}
+{% endif %}
+</body>
+
+</html>
