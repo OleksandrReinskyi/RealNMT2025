@@ -26,15 +26,15 @@ main{
                         font-weight: 600;
                         font-size: $textNormalFS - 1px;
                     }
-                    input{
+                    input{ 
                         font-size: $textBigHeadingFS;
                         border: 1.5px solid $borderGrey;
                         box-shadow: 0px 0px 2px $borderGrey;
                         max-width: 326px;
                         border-radius: 2px;
                         &:focus{
-                            border: 3px solid $linkColor;
-                            box-shadow: 0px 0px 2px $linkColor;
+                            border:  3px solid $linkColor;
+                            box-shadow: 0px 0px 2px  $linkColor;
                         }
                     }
                     .form__button{
