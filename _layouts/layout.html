@@ -10,7 +10,7 @@
 
     {% if page.css %}
         {% for file in page.css %}
-            <link rel="stylesheet" href="{{title}}/{{file}}">
+            <link rel="stylesheet" href="{{title}}{{file}}">
         {% endfor %}
     {% endif %}
 
