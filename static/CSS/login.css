@@ -1,0 +1,55 @@
+main #login #login__container #login__form .form__block .form__button {
+  background-color: #e21c49;
+  color: #fff;
+  padding: 7px 15px;
+}
+
+main #login {
+  margin: 40px auto;
+  width: 30vw;
+}
+main #login #login__container #login__title {
+  color: #e21c49;
+  filter: brightness(0.8);
+}
+main #login #login__container #login__form {
+  margin: 15px 0px;
+}
+main #login #login__container #login__form .form__block {
+  display: flex;
+  flex-direction: column;
+}
+main #login #login__container #login__form .form__block label {
+  color: #7f7f7f;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+main #login #login__container #login__form .form__block span {
+  color: #7f7f7f;
+  font-weight: 600;
+  font-size: 13px;
+}
+main #login #login__container #login__form .form__block input {
+  font-size: 20px;
+  border: 1.5px solid #b6b6b6;
+  box-shadow: 0px 0px 2px #b6b6b6;
+  max-width: 326px;
+  border-radius: 2px;
+}
+main #login #login__container #login__form .form__block input:focus {
+  border: 3px solid #779cad;
+  box-shadow: 0px 0px 2px #779cad;
+}
+main #login #login__container #login__form .form__block .form__button {
+  width: auto;
+  filter: brightness(0.9);
+  font-size: 16px;
+  align-self: flex-start;
+  font-weight: 500;
+  margin-top: 15px;
+}
+main #login #login__container #login__form > *:first-child {
+  margin-bottom: 10px;
+}
+
+/*# sourceMappingURL=login.css.map */

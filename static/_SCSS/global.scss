@@ -1,0 +1,31 @@
+@use "_null";
+@use "_variables" as *;
+
+body{
+    font-family: "Open Sans", sans-serif;
+    font-style: normal;
+    font-size: $textNormalFS;
+}
+
+h1{
+    font-size: $textBigHeadingFS;
+}
+
+.container{
+    width: $globalContainerWidth;
+    margin: 0 auto;
+}
+// :root{
+// 	@media screen and (min-width:1024px){
+// 		font-size: $largeFontSize;
+
+//     }
+//     @media screen and (min-width:720) and (max-width:1023){
+// 		font-size: $standartFontSize;
+    
+//     }
+
+//     @media screen and (max-width:719) {
+// 		font-size: $smallFontSize;
+//     }
+// }

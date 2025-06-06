@@ -1,0 +1,19 @@
+header {
+  padding: 10px 0 30px 0px;
+  box-shadow: 0px 2px 4px #b6b6b6;
+  border-bottom: 2px solid #b6b6b6;
+}
+header #header__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header #header__container #header__logo {
+  object-fit: cover;
+  width: 125px;
+}
+header #header__container #header__user-info #user-info__name {
+  font-weight: bold;
+}
+
+/*# sourceMappingURL=header.css.map */

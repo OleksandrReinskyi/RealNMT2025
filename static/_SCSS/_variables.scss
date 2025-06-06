@@ -1,0 +1,32 @@
+
+// COLORS 
+$textNormal: #000;
+$redNormal: #e21c49;
+$textGrey: #7f7f7f;
+$borderGrey: #b6b6b6;
+$popupGrey:  #e0e7e7;
+$linkColor: #779cad;
+
+$testMultipleLeftTest: #b3def9;
+$testMultipleLeftBackground: #cefcf6;
+$testMultipleRightTest: #85f473;
+$testMultipleRightBackgournd:#85f473;
+
+//FONT SIZES
+
+$textNormalFS: 14px;
+$textBigHeadingFS: 20px;
+$textSmallHeadingFS: 16px;
+
+
+//Sizes
+$globalContainerWidth: 82vw;
+
+
+//Elements
+
+%actionButton{
+    background-color: $redNormal;
+    color: #fff;
+    padding: 7px 15px;
+}
