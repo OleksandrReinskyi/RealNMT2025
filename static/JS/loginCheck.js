@@ -5,18 +5,18 @@ function checkIfLoggedIn(){
         if(item.expr < Date.now()){
             localStorage.removeItem("loggedIn")
             if(window.location.pathname != "/"){
-                window.location.href = window.location.href.replace(/\/.+$/g,"/");
+            window.location.href = window.location.href.replace(/\/[^\/]*$/, "/");
 
             }
         }else{
             if(window.location.pathname == "/"){
-               window.location.href = window.location.href.replace(/\/.+$/g,"/home");
+               window.location.href = window.location.href.replace(/\/[^\/]*$/, "/home")
             }
         }
 
     }else{
         if(window.location.pathname != "/"){
-            window.location.href = window.location.href.replace(/\/.+$/g,"/");
+            window.location.href = window.location.href.replace(/\/[^\/]*$/, "/");
 
         }
     }
