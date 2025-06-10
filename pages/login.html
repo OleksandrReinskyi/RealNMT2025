@@ -4,6 +4,8 @@ permalink: /
 loggedOut: true
 css:
  - static/CSS/login.css
+js: 
+ - static/JS/login.js
 ---
 
 
@@ -14,15 +16,18 @@ css:
             <form id="login__form">
                 <div class="form__block">
                     <label for="">Логін</label>
-                    <input type="text">
+                    <input type="text" id="input-login">
                     <span>Уведіть логін, отриманий для входу до системи</span>
                 </div>
                 <div class="form__block">
                     <label for="">Пароль</label>
-                    <input type="text">
+                    <input type="text" id="input-password">
                 </div>
                 <div class="form__block">
                     <button class="form__button" type="submit">Увійти</button>
+                </div>
+                <div class="form__block">
+                    <p id="login__error"></p>
                 </div>
             </form>
         </div>

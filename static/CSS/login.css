@@ -37,7 +37,7 @@ main #login #login__container #login__form .form__block input {
   border-radius: 2px;
 }
 main #login #login__container #login__form .form__block input:focus {
-  border: 3px solid #779cad;
+  border-color: #779cad;
   box-shadow: 0px 0px 2px #779cad;
 }
 main #login #login__container #login__form .form__block .form__button {
@@ -47,6 +47,10 @@ main #login #login__container #login__form .form__block .form__button {
   align-self: flex-start;
   font-weight: 500;
   margin-top: 15px;
+}
+main #login #login__container #login__form .form__block #login__error {
+  margin-top: 10px;
+  color: #e21c49;
 }
 main #login #login__container #login__form > *:first-child {
   margin-bottom: 10px;

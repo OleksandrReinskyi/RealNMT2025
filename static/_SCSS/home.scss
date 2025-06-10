@@ -1,0 +1,38 @@
+@use "variables" as *;
+
+main{
+    #tests{
+        margin: 70px auto;
+        #tests__container{
+            #tests__title{
+                color: $textGrey;
+                margin-bottom: 15px;
+            }
+            #tests__body{
+                display: inline-flex;
+                flex-direction: row;
+                align-items: center;
+                border: 1px solid $borderGrey;
+                #tests__info{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    margin-right: 60px;
+                    #tests__image{
+                        margin-right: 20px;
+                    }
+                    #tests__text{
+                        font-weight: bold;
+                    }
+                }
+                #tests__button{
+                    @extend %actionButton;
+                    text-transform: uppercase;
+                    border-radius: 3px;
+                    margin-right: 20px;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}

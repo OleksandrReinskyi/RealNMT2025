@@ -33,7 +33,7 @@ main{
                         max-width: 326px;
                         border-radius: 2px;
                         &:focus{
-                            border:  3px solid $linkColor;
+                            border-color: $linkColor;
                             box-shadow: 0px 0px 2px  $linkColor;
                         }
                     }
@@ -45,6 +45,10 @@ main{
                         align-self: flex-start;
                         font-weight: 500;
                         margin-top: 15px;
+                    }
+                    #login__error{
+                        margin-top: 10px;
+                        color: $redNormal;
                     }
                 }
                 >*:first-child{

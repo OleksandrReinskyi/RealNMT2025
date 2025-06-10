@@ -1,0 +1,39 @@
+main #tests #tests__container #tests__body #tests__button {
+  background-color: #e21c49;
+  color: #fff;
+  padding: 7px 15px;
+}
+
+main #tests {
+  margin: 70px auto;
+}
+main #tests #tests__container #tests__title {
+  color: #7f7f7f;
+  margin-bottom: 15px;
+}
+main #tests #tests__container #tests__body {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid #b6b6b6;
+}
+main #tests #tests__container #tests__body #tests__info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 60px;
+}
+main #tests #tests__container #tests__body #tests__info #tests__image {
+  margin-right: 20px;
+}
+main #tests #tests__container #tests__body #tests__info #tests__text {
+  font-weight: bold;
+}
+main #tests #tests__container #tests__body #tests__button {
+  text-transform: uppercase;
+  border-radius: 3px;
+  margin-right: 20px;
+  font-weight: 600;
+}
+
+/*# sourceMappingURL=home.css.map */
