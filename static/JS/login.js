@@ -1,3 +1,5 @@
+
+
 const login = "013b12as";
 const password = "1@rg3P3n1$";
 
@@ -29,5 +31,5 @@ function logIn(){
     localStorage.setItem("loggedIn",JSON.stringify({
         expr: Date.now() + 4*60*60*60
     }))
-   window.location.href = "/home";
+   window.location.href = window.location.href.replace(/\/.+$/g,"/home");
 }
