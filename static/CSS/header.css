@@ -10,7 +10,7 @@ header #header__container {
 }
 header #header__container #header__logo {
   object-fit: cover;
-  width: 125px;
+  width: 150px;
 }
 header #header__container #header__user-info #user-info__name {
   font-weight: bold;

@@ -1,0 +1,54 @@
+---
+layout: layout
+permalink: /nmt
+loggedOut: false
+css:
+    - static/CSS/nmt.css
+js:
+    - static/JS/nmt.js
+---
+
+<main class="container">
+    <section id="tabs">
+        <div id="tabs__header">
+            <div class="tab__title active" data-for="test">
+                Іспит
+            </div>
+            <div class="tab__title" data-for="maths">Математика: довідкові матеріали</div>
+            <div class="tab__title" data-for="history">Історія України: довідкові матеріали</div>
+            <div class="tab__title" data-for="instr">Інструкція</div>
+        </div>
+        <div id="tabs__body">
+            <div id="test" class="tab active">
+                <div id="test__header">
+                    <h1 id="test__title">НМНТ, 20.07.2025 року, час початку: 10:00</h1>
+                    <button id="test__button">Розпочати тест</button>
+                </div>
+            </div>
+            <div id="maths" class="tab">
+                <embed 
+                    src="static/pdfs/maths.pdf" 
+                    type="application/pdf"
+                    scrolling="auto"
+                    frameBorder="0"
+                    height="100%"
+                    width="100%">
+                </embed>
+            </div>
+            <div id="history" class="tab"></div>
+            <div id="instr" class="tab">
+                <div id="instr__info">
+                    <h2>Інструкція</h2>
+                    <p>Не ісполнять</p>
+                </div>
+                <div id="instr__buttons">
+                    <h3>Ознайомлений?</h3>
+                    <button id="instr__confirm">Так</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="captchas">
+
+    </section>
+</main>
