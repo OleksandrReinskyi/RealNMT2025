@@ -1,4 +1,4 @@
-main #tabs #tabs__body #test #test__header #test__button {
+main #tabs #tabs__body #test #test__header #test__button, main #tabs #tabs__body #instr #instr__buttons button {
   background-color: #e21c49;
   color: #fff;
   padding: 7px 15px;
@@ -28,19 +28,17 @@ main #tabs #tabs__header .tab__title.active::after {
   background-color: #e21c49;
 }
 main #tabs #tabs__body {
-  height: 50vh;
+  height: 70vh;
   width: 100%;
 }
 main #tabs #tabs__body .tab {
   height: 100%;
   width: 100%;
   display: none;
+  border: 2px solid #b6b6b6;
 }
 main #tabs #tabs__body .tab.active {
   display: block;
-}
-main #tabs #tabs__body #test {
-  border: 2px solid #b6b6b6;
 }
 main #tabs #tabs__body #test #test__header {
   padding: 15px 12px;
@@ -51,6 +49,44 @@ main #tabs #tabs__body #test #test__header {
 }
 main #tabs #tabs__body #test #test__header #test__button {
   border-radius: 10px;
+}
+main #tabs #tabs__body #instr {
+  text-align: center;
+}
+main #tabs #tabs__body #instr #instr__info {
+  margin-top: 30px;
+  margin-bottom: 120px;
+}
+main #tabs #tabs__body #instr #instr__info h1 {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 100px;
+}
+main #tabs #tabs__body #instr #instr__buttons h1 {
+  margin-bottom: 20px;
+  font-style: italic;
+}
+main #tabs #tabs__body #instr #instr__buttons h2 {
+  margin-bottom: 20px;
+  opacity: 0;
+}
+main #tabs #tabs__body #instr #instr__buttons h2.active {
+  opacity: 100%;
+}
+main #tabs #tabs__body #instr #instr__buttons button {
+  margin-bottom: 20px;
+}
+main #tabs #tabs__body #instr #instr__buttons button.active {
+  background-color: #b6b6b6;
+}
+main #tabs #tabs__body #instr #instr__buttons button.clicked {
+  background-color: green;
+  cursor: default;
+}
+main #tabs #tabs__body #instr.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /*# sourceMappingURL=nmt.css.map */

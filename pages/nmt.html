@@ -14,7 +14,7 @@ js:
             <div class="tab__title active" data-for="test">
                 Іспит
             </div>
-            <div class="tab__title" data-for="maths">Математика: довідкові матеріали</div>
+            <a class="tab__title" data-for="maths">Математика: довідкові матеріали</a>
             <div class="tab__title" data-for="history">Історія України: довідкові матеріали</div>
             <div class="tab__title" data-for="instr">Інструкція</div>
         </div>
@@ -35,15 +35,17 @@ js:
                     width="100%">
                 </embed>
             </div>
-            <div id="history" class="tab"></div>
+            <div id="history" class="tab "></div>
             <div id="instr" class="tab">
                 <div id="instr__info">
-                    <h2>Інструкція</h2>
-                    <p>Не ісполнять</p>
+                    <h1>Інструкція</h1>
+                    <h2>Не ісполнять.</h2>
                 </div>
                 <div id="instr__buttons">
-                    <h3>Ознайомлений?</h3>
+                    <h1>Ознайомлений?</h1>
+                    <h2 id="instr__question">Сосав?</h2>
                     <button id="instr__confirm">Так</button>
+                    <h2 id="instr__followup">Всьо, без питань</h2>
                 </div>
             </div>
         </div>

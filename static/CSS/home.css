@@ -34,6 +34,7 @@ main #tests #tests__container #tests__body #tests__button {
   border-radius: 3px;
   margin-right: 20px;
   font-weight: 600;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=home.css.map */
