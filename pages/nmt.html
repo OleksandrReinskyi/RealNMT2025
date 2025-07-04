@@ -6,6 +6,7 @@ css:
     - static/CSS/nmt.css
 js:
     - static/JS/nmt.js
+    - static/JS/general/tabs.js
 ---
 
 <main class="container">
@@ -20,9 +21,37 @@ js:
         </div>
         <div id="tabs__body">
             <div id="test" class="tab active">
-                <div id="test__header">
+                <div id="test__header" class="test__block active" data-num="1"> 
                     <h1 id="test__title">НМНТ, 20.07.2025 року, час початку: 10:00</h1>
-                    <button id="test__button">Розпочати тест</button>
+                    <button id="test__button" class="test__next">Розпочати тест</button>
+                </div>
+                <div id="test__confirmation" class="test__block" data-num="2"> 
+                    <h1>Тест "НМТ-2025" обмежений у часісімасісі (2 години)</h1>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus error reiciendis voluptatum voluptates. Incidunt quas iste, aliquam quia voluptatem maiores, repellendus tempore ut iusto dignissimos consequatur deserunt aperiam cumque! Tempore sunt minus repudiandae.</p>
+                    <p>Accusantium distinctio at magni, doloribus ipsa fugiat laborum dolore rerum, omnis officiis, qui iusto laboriosam id. Quod sed eum eveniet repellat odit obcaecati neque praesentium ea commodi dolore? Eveniet eligendi autem reiciendis iste!</p>
+                    <p>Velit accusantium delectus ipsum minima id laboriosam? Asperiores modi earum odit alias culpa suscipit numquam perferendis beatae. Adipisci voluptatem nemo voluptates fugit in. Consequuntur repellendus, tempore laboriosam rerum ex corrupti non alias laudantium?</p>
+                    <button class="test__next">Розпочати роботу над тестом</button>
+                </div>
+                <div id="test__captcha" class="test__block" data-num="3"> 
+                    <div id="captcha__container">
+                        <div id="captcha__header">
+                            <p>Виберіть усі картинки з</p>
+                            <h1>"Піу-піу"</h1>
+                            <p>Якщо їх немає, натисність далі</p>
+                        </div>
+                        <div id="captcha__body">
+                            {% for i in (1..16) %}
+                                <img src="static/imgs/Page/Captcha/Maks_{{i}}.png" class="captcha__img" alt="" data-imgnum="{{i}}">
+                            {% endfor %}
+                        </div>
+                        <div id="captcha__footer">
+                            <button class="test__next">Далі</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="test__loading" class="test__block" data-num="4">
+                    <h1>Завантаження ...</h1>
+                    <img src="static/imgs/Page/loading.gif" alt="">
                 </div>
             </div>
             <div id="maths" class="tab">
@@ -49,8 +78,5 @@ js:
                 </div>
             </div>
         </div>
-    </section>
-    <section id="captchas">
-
     </section>
 </main>

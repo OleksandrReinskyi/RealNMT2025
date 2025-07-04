@@ -1,24 +1,3 @@
-const tabs = document.querySelectorAll(".tab");
-const tabTitles = document.querySelectorAll(".tab__title");
-
-
-
-window.addEventListener("click",(event)=>{
-    const target = event.target;
-    let tabId = target.getAttribute("data-for");
-    if(tabId){
-        tabs.forEach((item)=>{
-            item.classList.remove("active")
-        })
-        tabTitles.forEach((item)=>{
-            item.classList.remove("active")
-        })
-        document.getElementById(tabId).classList.add("active");
-        target.classList.add("active");
-    }
-})
-
-
 const instrConfirmationButton = document.getElementById("instr__confirm");
 const instrQuestion = document.getElementById("instr__question");
 const instrFollowUp = document.getElementById("instr__followup");
@@ -40,3 +19,23 @@ function sosavUp(event){
 
 instrConfirmationButton.addEventListener("mousedown",sosavDown)
 document.addEventListener("mouseup",sosavUp)
+
+let confirmationIndex = 1;
+const testBlocks = document.querySelectorAll("[data-num]")
+
+document.addEventListener("click",(event)=>{
+    let target = event.target;
+    if(target.classList.contains("test__next")){
+        testBlocks.forEach((item)=>{
+            item.classList.remove("active")
+        })
+        testBlocks[confirmationIndex].classList.add("active");
+        confirmationIndex++;
+    }
+
+    let imageNum = target.getAttribute("data-imgnum");
+
+    if(imageNum){
+        target.classList.toggle("active");
+    }
+})

@@ -28,11 +28,12 @@ main #tabs #tabs__header .tab__title.active::after {
   background-color: #e21c49;
 }
 main #tabs #tabs__body {
-  height: 70vh;
+  min-height: auto;
   width: 100%;
 }
 main #tabs #tabs__body .tab {
-  height: 100%;
+  min-height: 70vh;
+  height: auto;
   width: 100%;
   display: none;
   border: 2px solid #b6b6b6;
@@ -42,6 +43,8 @@ main #tabs #tabs__body .tab.active {
 }
 main #tabs #tabs__body #test #test__header {
   padding: 15px 12px;
+}
+main #tabs #tabs__body #test #test__header.active {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -49,6 +52,74 @@ main #tabs #tabs__body #test #test__header {
 }
 main #tabs #tabs__body #test #test__header #test__button {
   border-radius: 10px;
+}
+main #tabs #tabs__body #test .test__block {
+  display: none;
+}
+main #tabs #tabs__body #test .test__block.active {
+  display: block;
+}
+main #tabs #tabs__body #test #test__captcha {
+  width: 600px;
+  margin: 0 auto;
+  height: auto;
+}
+main #tabs #tabs__body #test #test__captcha #captcha__container {
+  margin: 20px;
+  width: auto;
+  border: 1px #b6b6b6 solid;
+  padding: 5px;
+}
+main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__header {
+  background-color: #1a74ec;
+  padding: 25px 20px;
+  color: #fff;
+}
+main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__header h1 {
+  margin: 10px 0px;
+  font-weight: bold;
+}
+main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body {
+  display: grid;
+  margin: 10px 0px;
+  grid-template-columns: repeat(4, auto);
+  grid-template-rows: repeat(4, auto);
+  gap: 5px;
+}
+main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body img {
+  height: 118px;
+  width: 100%;
+  cursor: pointer;
+}
+main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body img.active {
+  transform: scale(0.9, 0.9);
+}
+main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__footer {
+  border-top: 1px solid #b6b6b6;
+  padding: 25px 20px;
+  color: #fff;
+  display: flex;
+  justify-content: end;
+}
+main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__footer button {
+  background-color: #1a74ec;
+  color: #fff;
+  font-size: 18px;
+  padding: 5px 10px;
+}
+main #tabs #tabs__body #test #test__loading {
+  height: 70vh;
+}
+main #tabs #tabs__body #test #test__loading.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+main #tabs #tabs__body #test #test__loading img {
+  margin-top: 15px;
+  width: 336px;
+  height: 246px;
 }
 main #tabs #tabs__body #instr {
   text-align: center;
