@@ -4,6 +4,7 @@ permalink: /nmt
 loggedOut: false
 css:
     - static/CSS/nmt.css
+    - static/CSS/general/tabs.css
 js:
     - static/JS/nmt.js
     - static/JS/general/tabs.js
@@ -27,10 +28,10 @@ js:
                 </div>
                 <div id="test__confirmation" class="test__block" data-num="2"> 
                     <h1>Тест "НМТ-2025" обмежений у часісімасісі (2 години)</h1>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus error reiciendis voluptatum voluptates. Incidunt quas iste, aliquam quia voluptatem maiores, repellendus tempore ut iusto dignissimos consequatur deserunt aperiam cumque! Tempore sunt minus repudiandae.</p>
-                    <p>Accusantium distinctio at magni, doloribus ipsa fugiat laborum dolore rerum, omnis officiis, qui iusto laboriosam id. Quod sed eum eveniet repellat odit obcaecati neque praesentium ea commodi dolore? Eveniet eligendi autem reiciendis iste!</p>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus error reiciendis voluptatum voluptates. Incidunt quas iste, aliquam quia voluptatem maiores, repellendus tempore ut iusto dignissimos consequatur deserunt aperiam cumque! Tempore sunt minus repudiandae. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil, optio?</p>
+                    <p>Accusantium distinctio at magni, doloribus ipsa fugiat laborum dolore rerum, omnis officiis, qui iusto laboriosam id. Quod sed eum eveniet repellat odit obcaecati neque praesentium ea commodi dolore? Eveniet eligendi autem reiciendis iste! Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus quas esse consectetur explicabo. Cumque provident magni harum totam expedita laboriosam?</p>
                     <p>Velit accusantium delectus ipsum minima id laboriosam? Asperiores modi earum odit alias culpa suscipit numquam perferendis beatae. Adipisci voluptatem nemo voluptates fugit in. Consequuntur repellendus, tempore laboriosam rerum ex corrupti non alias laudantium?</p>
-                    <button class="test__next">Розпочати роботу над тестом</button>
+                    <span class="test__next">Розпочати роботу над тестом</span>
                 </div>
                 <div id="test__captcha" class="test__block" data-num="3"> 
                     <div id="captcha__container">
@@ -54,17 +55,7 @@ js:
                     <img src="static/imgs/Page/loading.gif" alt="">
                 </div>
             </div>
-            <div id="maths" class="tab">
-                <embed 
-                    src="static/pdfs/maths.pdf" 
-                    type="application/pdf"
-                    scrolling="auto"
-                    frameBorder="0"
-                    height="100%"
-                    width="100%">
-                </embed>
-            </div>
-            <div id="history" class="tab "></div>
+            {% include materials.html %}
             <div id="instr" class="tab">
                 <div id="instr__info">
                     <h1>Інструкція</h1>

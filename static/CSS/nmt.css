@@ -7,40 +7,6 @@ main #tabs #tabs__body #test #test__header #test__button, main #tabs #tabs__body
 main #tabs {
   margin-top: 25px;
 }
-main #tabs #tabs__header {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-}
-main #tabs #tabs__header .tab__title {
-  position: relative;
-  color: #000;
-  padding: 12px 15px;
-  cursor: pointer;
-}
-main #tabs #tabs__header .tab__title.active::after {
-  content: "";
-  height: 4px;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  background-color: #e21c49;
-}
-main #tabs #tabs__body {
-  min-height: auto;
-  width: 100%;
-}
-main #tabs #tabs__body .tab {
-  min-height: 70vh;
-  height: auto;
-  width: 100%;
-  display: none;
-  border: 2px solid #b6b6b6;
-}
-main #tabs #tabs__body .tab.active {
-  display: block;
-}
 main #tabs #tabs__body #test #test__header {
   padding: 15px 12px;
 }
@@ -59,10 +25,35 @@ main #tabs #tabs__body #test .test__block {
 main #tabs #tabs__body #test .test__block.active {
   display: block;
 }
+main #tabs #tabs__body #test #test__confirmation {
+  padding: 20px;
+  margin: 10px;
+  height: 100%;
+  border: 2px solid #b6b6b6;
+  background-color: #eef5f5;
+}
+main #tabs #tabs__body #test #test__confirmation h1 {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+main #tabs #tabs__body #test #test__confirmation p {
+  margin-bottom: 20px;
+  line-height: 1.5em;
+}
+main #tabs #tabs__body #test #test__confirmation span {
+  display: block;
+  margin-top: 60px;
+  color: #e21c49;
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
 main #tabs #tabs__body #test #test__captcha {
   width: 600px;
   margin: 0 auto;
   height: auto;
+  background-color: #fff;
 }
 main #tabs #tabs__body #test #test__captcha #captcha__container {
   margin: 20px;
@@ -100,6 +91,7 @@ main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__footer
   color: #fff;
   display: flex;
   justify-content: end;
+  background-color: #fff;
 }
 main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__footer button {
   background-color: #1a74ec;
@@ -118,8 +110,6 @@ main #tabs #tabs__body #test #test__loading.active {
 }
 main #tabs #tabs__body #test #test__loading img {
   margin-top: 15px;
-  width: 336px;
-  height: 246px;
 }
 main #tabs #tabs__body #instr {
   text-align: center;
@@ -158,6 +148,16 @@ main #tabs #tabs__body #instr.active {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+main.hidden {
+  display: none;
+}
+
+#global-error {
+  margin: 20px;
+  font-weight: bold;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 25px;
 }
 
 /*# sourceMappingURL=nmt.css.map */

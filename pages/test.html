@@ -1,0 +1,54 @@
+---
+layout: layout
+permalink: /test
+loggedOut: false
+css:
+    - static/CSS/general/tabs.css
+js:
+    - static/JS/general/tabs.js
+---
+
+<main class="container">
+    <section id="tabs">
+        <div id="tabs__header">
+            <div class="tab__title active" data-for="test">
+                Іспит
+            </div>
+            <a class="tab__title" data-for="maths">Математика: довідкові матеріали</a>
+            <div class="tab__title" data-for="history">Історія України: довідкові матеріали</div>
+        </div>
+        <div id="tabs__body">
+            <div id="test" class="tab active">
+                <div id="test__container">
+                    <div id="test__main">
+                        <div id="main__container">
+                            <div class="main__header">
+                                <div id="main-header__container">
+                                    <div id="main-header__maths" data-show="maths">Математика</div>
+                                    <div id="main-header__history" data-show="hist">Історія України</div>
+                                </div>
+                            </div>
+                            <div id="main__body">
+                                <div class="main__block test-block"></div>
+                                <div class="main__block info-block"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="test__side"></div>
+                </div>
+            </div>
+            {% include materials.html %}
+        </div>
+    </section>
+
+    <section id="global-popup">
+        <div id="popup__container">
+            <p id="popup__text">НМТ-2025 обмежений у часі. Таймер праворуч показує, скільки хвилин залишилося до кінця роботи. Вибравши відповідь на завдання, не забудьте натиснути на "Зберегти відповідь" для кожного завдання. Якщо Ви цього не зробите, відповідь не буде збережено і зараховано. Перш ніж натиснути на "Завершити роботу над тестом", перевірте, чи зберегли всі надані відповіді</p>
+            <div id="popup__controls">
+                <button id="popup__finish-test">Завершити роботу над тестом</button>
+                <div id="popup__timer"></div>
+                <button id="popup__hide">X</button>
+            </div>
+        </div>
+    </section>
+</main>
