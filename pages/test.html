@@ -4,8 +4,10 @@ permalink: /test
 loggedOut: false
 css:
     - static/CSS/general/tabs.css
+    - static/CSS/test.css
 js:
     - static/JS/general/tabs.js
+    - static/JS/test.js
 ---
 
 <main class="container">
@@ -22,19 +24,28 @@ js:
                 <div id="test__container">
                     <div id="test__main">
                         <div id="main__container">
-                            <div class="main__header">
-                                <div id="main-header__container">
+                            <div id="main__header">
+                                    <div class="main__controls">&lt;</div>
                                     <div id="main-header__maths" data-show="maths">Математика</div>
                                     <div id="main-header__history" data-show="hist">Історія України</div>
-                                </div>
+                                    <div class="main__controls"> &gt; </div>
+
                             </div>
                             <div id="main__body">
-                                <div class="main__block test-block"></div>
+                                <div class="main__block test-block single-answer">
+                                    <p class="single-answer__question"></p>
+                                    
+                                </div>
                                 <div class="main__block info-block"></div>
                             </div>
                         </div>
                     </div>
-                    <div id="test__side"></div>
+                    <div id="test__side">
+                        <h1 id="side__heading">Завдання</h1>
+                        <div id="side__body">
+
+                        </div>
+                    </div>
                 </div>
             </div>
             {% include materials.html %}

@@ -1,0 +1,55 @@
+@use "variables" as *;
+
+main{
+    #test{
+        border: none !important;
+        #test__container{
+            display: grid;
+            grid-template-columns: repeat(6,1fr);
+            grid-template-rows: 1fr;
+
+            gap:5px;
+
+            @media screen and (max-width:600px) {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+
+            #test__main{
+                grid-column-start: 1;
+                grid-column-end: 6;
+
+
+
+                #main__container{
+                    #main__header{
+                        display: flex;
+                        width: 100%;
+                        flex-direction: row;
+
+                        div{
+                            width: 100%;
+                            padding: 15px 0px;
+                            text-align: center;
+                            border: 1px solid $borderGrey;
+                            cursor: pointer;
+                            &.active{
+                                border-bottom: 2px solid $redNormal;
+                                color: $redNormal;
+                            }
+                        }
+                        .main__controls{
+                            width: 23%;
+                        }
+                    }
+                }
+            }
+
+            #test__main,#test__side{
+                padding: 15px;
+                border: 2px solid $borderGrey;
+            }
+
+        }
+    }
+}

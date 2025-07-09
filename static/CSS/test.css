@@ -1,0 +1,44 @@
+main #test {
+  border: none !important;
+}
+main #test #test__container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 1fr;
+  gap: 5px;
+}
+@media screen and (max-width: 600px) {
+  main #test #test__container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+}
+main #test #test__container #test__main {
+  grid-column-start: 1;
+  grid-column-end: 6;
+}
+main #test #test__container #test__main #main__container #main__header {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+}
+main #test #test__container #test__main #main__container #main__header div {
+  width: 100%;
+  padding: 15px 0px;
+  text-align: center;
+  border: 1px solid #b6b6b6;
+  cursor: pointer;
+}
+main #test #test__container #test__main #main__container #main__header div.active {
+  border-bottom: 2px solid #e21c49;
+  color: #e21c49;
+}
+main #test #test__container #test__main #main__container #main__header .main__controls {
+  width: 23%;
+}
+main #test #test__container #test__main, main #test #test__container #test__side {
+  padding: 15px;
+  border: 2px solid #b6b6b6;
+}
+
+/*# sourceMappingURL=test.css.map */
