@@ -79,8 +79,10 @@ main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body {
 }
 main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body img {
   height: 118px;
+  position: relative;
   width: 100%;
   cursor: pointer;
+  transition: 0.1s all ease;
 }
 main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body img.active {
   transform: scale(0.9, 0.9);
