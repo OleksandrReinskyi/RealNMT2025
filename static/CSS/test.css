@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 main #test {
   border: none !important;
 }
@@ -39,6 +43,9 @@ main #test #test__container #test__main #main__container #main__header .main__co
 main #test #test__container #test__main, main #test #test__container #test__side {
   padding: 15px;
   border: 2px solid #b6b6b6;
+}
+main #test #test__container #test__side .side__cell.active {
+  background-color: #e21c49;
 }
 
 /*# sourceMappingURL=test.css.map */

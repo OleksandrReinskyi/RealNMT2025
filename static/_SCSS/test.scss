@@ -1,5 +1,9 @@
 @use "variables" as *;
 
+html{
+    scroll-behavior: smooth;
+}
+
 main{
     #test{
         border: none !important;
@@ -48,6 +52,14 @@ main{
             #test__main,#test__side{
                 padding: 15px;
                 border: 2px solid $borderGrey;
+            }
+
+            #test__side{
+                .side__cell{
+                    &.active{
+                        background-color: $redNormal;
+                    }
+                }
             }
 
         }

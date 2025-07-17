@@ -51,7 +51,7 @@ document.addEventListener("click",async (event)=>{
             await wait(750) 
             main.classList.remove("hidden")
 
-            await wait(250)
+            await wait(1000)
             queueMicrotask(()=>{
                 for(let i = 0; i<250000;i++){
                     console.log(i)
@@ -68,8 +68,7 @@ document.addEventListener("click",async (event)=>{
     }
 
     let imageNum = target.getAttribute("data-imgnum");
-
     if(imageNum){
-        target.classList.toggle("active");
+        target.closest(".captcha__img").classList.toggle("active");
     }
 })

@@ -77,15 +77,51 @@ main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body {
   grid-template-rows: repeat(4, auto);
   gap: 5px;
 }
-main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body img {
+main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img {
   height: 118px;
   position: relative;
   width: 100%;
   cursor: pointer;
   transition: 0.1s all ease;
 }
-main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body img.active {
+main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img.active {
   transform: scale(0.9, 0.9);
+}
+main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img.active .captcha__tick {
+  opacity: 100%;
+}
+main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img .captcha__tick {
+  width: 30px;
+  height: 30px;
+  opacity: 0%;
+  background-color: #1a74ec;
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  border-radius: 50px;
+}
+main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img .captcha__tick::before, main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img .captcha__tick::after {
+  content: "";
+  background-color: #fff;
+  height: 3px;
+  position: absolute;
+}
+main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img .captcha__tick::before {
+  width: 10px;
+  transform: rotate(45deg);
+  top: 16px;
+  left: 4px;
+}
+main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img .captcha__tick::after {
+  width: 20px;
+  transform: rotate(-45deg);
+  top: 14px;
+  left: 9px;
+}
+main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
 }
 main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__footer {
   border-top: 1px solid #b6b6b6;
@@ -99,7 +135,7 @@ main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__footer
   background-color: #1a74ec;
   color: #fff;
   font-size: 18px;
-  padding: 5px 10px;
+  padding: 10px 15px;
 }
 main #tabs #tabs__body #test #test__loading {
   height: 70vh;
@@ -152,7 +188,7 @@ main #tabs #tabs__body #instr.active {
   align-items: center;
 }
 main.hidden {
-  display: none;
+  opacity: 0;
 }
 
 #global-error {

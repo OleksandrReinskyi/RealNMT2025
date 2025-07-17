@@ -29,83 +29,108 @@
 
 class _Test{
     static idCounter = 0;
-    constructor(question){
+    constructor(question,imgPath){
         this.id = _Test.idCounter++;
-        this.view = null;
+        this.view = "";
         this.question = question;
-        this.correctAnswer = null;
+        this.img = imgPath;
         
         this.infoBlockBeforeText = "";
         this.sidebarCell = null;
+        this.questionInfo = null;
     }
 
     renderInfoBlock(index,isAnswerSaved){
-        if(this.infoBlockBeforeText){
-            this.view += `
+        if(this.infoBlockBeforeText != ""){
+            this.view == `
         <div class="main__block info-block">
             <div class="info-block__text">${this.infoBlockBeforeText}</div>
         </div>`
         }
+        
+        this.questionInfo = `
+            <div class="question__info">
+                <div class="question__title">${this.question}</div>
+                ${this.img ? `<img class="question__img" src="${this.imgPath}">` :""} 
+            </div>
+        `
 
         this.sidebarCell = `
-            <div class="side__cell ${isAnswerSaved ? "active" : ""}" data-sideTest-id="${this.id}">
-                <p class="cell__text">${index}</p>
-            </div>
+            <a class="side__cell ${isAnswerSaved ? "active" : ""}" data-sideTest-id="${this.id}" href="#test-block__${this.id}">
+                ${index}
+            </a>
         `
     }
 }
 
 class SingleAnswer extends _Test{
-    constructor(question,answers,correct){
-        super(question);
+    constructor(question,answers,imgPath){
+        super(question,imgPath);
         this.answers = answers;
-        this.correctAnswer = correct;
     }
 
-    renderView(index){
+    renderView(index,selectedAnswerId){
 
         let answersString = ``;
 
         for(let i of this.answers){
             answersString += `
              <div class="form__block">
-                <input class="sin-an__input" type="radio" name="${i.id}-answ" id="sin-an-${i.id}">
+                <input class="sin-an__input" type="radio" name="${this.id}-answ" id="sin-an-${i.id}" data-answ-id="${i.id}" ${selectedAnswerId == i.id ? "checked" : ""}>
                 <label for="sin-an-${i.id}" class="sin-an__answer">${i.answer}</label>
             </div>`
         }
 
         this.view += `
-    <div class="main__block test-block sin-an" data-test-id="${this.id}">
-        <h2 class="question__title">Завдання ${index}</h2>
-        <p class="question__question">${this.question}</p>
-        <form  class="sin-an__form">
-           ${answersString}
-            <div class="form__block">
-                <button class="sin-an__save" >Зберегти відповідь</button>
-            </div>
-        </form>
-    </div>
-
+        <div class="main__block test-block sin-an" id="test-block__${this.id}" data-test-id="${this.id}">
+            <h2 class="question__number">Завдання ${index+1}</h2>
+            ${this.questionInfo}
+            <form  class="sin-an__form" onsubmit="return false">
+            ${answersString}
+                <div class="form__block">
+                    <button class="an__save" disabled>Зберегти відповідь</button>
+                </div>
+            </form>
+        </div>
         `
 
 
+    }
+
+    getChosenAnswerId(parent){
+        const selectedAnsw = parent.querySelector(".sin-an__input:checked");
+        console.log(selectedAnsw)
+        return selectedAnsw.getAttribute("data-answ-id");
     }
 }
 
 class _TestsArr{
     static testsArrId = 0;
-    constructor(contents){
+    constructor(){
         this.id = _TestsArr.testsArrId++;
         this.body = null;
-        this.contents = contents;
+        this.side = null;
+        this.contents = [];
 
         this.answers = JSON.parse(localStorage.getItem(this.id) || "{}");
     }
     
     handleClick(event){
-        //when click saveButton: disable it and save answer
-        // when click the test option: enable save button (query selector by id)
-        // when click sidebarCell: go to that question 
+        const target = event.target;
+
+        if(target.classList.contains("an__save")){
+            this.saveAnswer(target);
+        }
+
+        if(target.getAttribute("data-answ-id")){
+            let parent = target.closest(".test-block");
+            const questionId = parent.getAttribute("data-test-id");
+            let answerButton = parent.querySelector(".an__save");
+            if(answerButton.disabled == true){
+                this.updateSidebar(questionId,false);
+                answerButton.disabled = false;
+            }
+        }
     }
 
     renderAll(){
@@ -113,19 +138,58 @@ class _TestsArr{
         for(let i = 0;i<this.contents.length;i++){
             let item = this.contents[i];
             item.renderInfoBlock(i,Boolean(this.answers[item.id]))
-            item.renderView(i);
+            item.renderView(i,this.answers[item.id]);
             this.body.insertAdjacentHTML("beforeend",item.view)
 
+            this.side.insertAdjacentHTML("beforeend",item.sidebarCell)
         }
     }
 
-    saveAnswer(){
+    saveAnswer(target){
+        if(target.disabled == true) return;
+        target.disabled = true;
+        
+        let parent = target.closest(".test-block");
+        const questionId = parent.getAttribute("data-test-id");
 
+        const questionClass = this.contents.find((elem)=>{return elem.id == questionId})
+        if(questionClass){
+            let answerId = questionClass.getChosenAnswerId(parent);
+            this.answers[questionId] = answerId;
+        }
         localStorage.setItem(this.id,JSON.stringify(this.answers))
+        console.log(this.answers)
+        this.updateSidebar(questionId,true)
     }
 
-    updateSidebar(){
+    updateSidebar(id,toggler){
+        let sideBarCell = this.side.querySelector(`[data-sidetest-id="${id}"]`);
+        if(toggler){
+            sideBarCell.classList.add("active")
+        }else{
+            sideBarCell.classList.remove("active")
+        }
+    }
 
+    /**
+     * types: 
+     * - 1 - sin-an (single)
+     * - 2 - open-an
+     * - 3 - seq-an (sequence)
+     * - 4 - mult-an (multiple)
+     * - 5 - accord-an (accordance)
+     */
+
+    convertTestsArr(arr){
+        for(let i of arr){
+            if(i.type==1){
+                let answers = [];
+                for(let answer of i.answers){
+                    answers.push(new Answer(answer))
+                }
+                this.contents.push(new SingleAnswer(i.question,answers,""))
+            }
+        }
     }
 }
 
@@ -133,6 +197,7 @@ class MathTests extends _TestsArr{
     constructor(contents){
         super(contents);
         this.body = document.querySelector("#main__maths");
+        this.side = document.querySelector("#side__maths");
         this.body.addEventListener("click",this.handleClick.bind(this))
     }
 }
@@ -149,28 +214,33 @@ class HistTests extends _TestsArr{
 class Answer{
     static idAnswerCounter = 0;
     constructor(text){
-        this.id = Answer.idCounter++;
+        this.id = Answer.idAnswerCounter++;
         this.answer = text;
     }
 }
 
 
-const mathBlock = new MathTests(
-    [new SingleAnswer("2+2=...?",[
-        new Answer("2?!!?!?"),
-        new Answer("4"),
-        new Answer("5"),
-        new Answer("1"),
-        new Answer("0"),
-    ],"1")]
-)
 
+const testsArray = [
+    {
+        type:1,
+        question: "2+2=...?",
+        answers:["2?!!?!?","4","5","1","0"],
+        img: null
+    },
+    {
+        type:1,
+        question:"",
+        answers:[""],
+        img:""
+    }
+]
+
+
+
+const mathBlock = new MathTests()
+mathBlock.convertTestsArr(testsArray)
 mathBlock.renderAll();
 
-/**
- * Tasks:
- * 1) Click on sidebar cell
- * 2) Save answer 
- * 3) Correct answer?
- * 4) get answer from local storage
- */
+
+

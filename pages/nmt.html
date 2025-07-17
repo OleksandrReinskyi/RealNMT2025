@@ -38,11 +38,14 @@ js:
                         <div id="captcha__header">
                             <p>Виберіть усі картинки з</p>
                             <h1>"Піу-піу"</h1>
-                            <p>Якщо їх немає, натисність далі</p>
                         </div>
                         <div id="captcha__body">
                             {% for i in (1..16) %}
-                                <img src="static/imgs/Page/Captcha/Maks_{{i}}.png" class="captcha__img" alt="" data-imgnum="{{i}}">
+                            <div class="captcha__img" id="img__{{i}}" >
+                                <img src="static/imgs/Page/Captcha/Maks_{{i}}.png" alt="" data-imgnum="{{i}}">
+                                <span class="captcha__tick"></span>
+                            </div>
+
                             {% endfor %}
                         </div>
                         <div id="captcha__footer">
