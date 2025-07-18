@@ -17,8 +17,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    {% if page.jsHead %}
+        {% for file in page.jsHead %}
+            <script src="{{file}}"></script>
+        {% endfor %}
+    {% endif %}
+
 </head>
 <body>
+
+
 {% include header.html %}
     {{content}}
 

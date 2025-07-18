@@ -27,6 +27,15 @@
  * 
  */
 
+class Helpers{
+    static waitRandTime(){
+        let ms = Math.random()*1000
+        return new Promise((res,rej)=>{
+            setTimeout(res,ms)
+        })
+    }
+}
+
 class _Test{
     static idCounter = 0;
     constructor(question,imgPath){
@@ -34,7 +43,7 @@ class _Test{
         this.view = "";
         this.question = question;
         this.img = imgPath;
-        
+
         this.infoBlockBeforeText = "";
         this.sidebarCell = null;
         this.questionInfo = null;
@@ -51,13 +60,13 @@ class _Test{
         this.questionInfo = `
             <div class="question__info">
                 <div class="question__title">${this.question}</div>
-                ${this.img ? `<img class="question__img" src="${this.imgPath}">` :""} 
+                ${this.img ? `<img class="question__img" src="${this.img}">` :""} 
             </div>
         `
 
         this.sidebarCell = `
             <a class="side__cell ${isAnswerSaved ? "active" : ""}" data-sideTest-id="${this.id}" href="#test-block__${this.id}">
-                ${index}
+                ${index+1}
             </a>
         `
     }
@@ -99,8 +108,41 @@ class SingleAnswer extends _Test{
 
     getChosenAnswerId(parent){
         const selectedAnsw = parent.querySelector(".sin-an__input:checked");
-        console.log(selectedAnsw)
         return selectedAnsw.getAttribute("data-answ-id");
+    }
+}
+
+class OpenAnswer extends _Test{
+    constructor(question,imgPath){
+        super(question,imgPath);
+    }
+
+    renderView(index,savedAnswer){
+        this.view += `
+        <div class="main__block test-block open-an" id="test-block__${this.id}" data-test-id="${this.id}">
+            <h2 class="question__number">Завдання ${index+1}</h2>
+            ${this.questionInfo}
+            <form  class="open-an__form" onsubmit="return false">
+                <div class="form__block">
+                    <input class="open-an__input" type="text" data-latexBlock="latex__${this.id}" value="${savedAnswer}">
+                </div>
+                <div class="form__block" id="latex__${this.id}">
+
+                </div>
+                <div class="form__block">
+                    <button class="an__save" disabled>Зберегти відповідь</button>
+                </div>
+            </form>
+        </div>
+        `
+    }
+
+
+
+
+    getChosenAnswerId(parent){
+        const selectedAnsw = parent.querySelector(".open-an__input");
+        return selectedAnsw.value;
     }
 }
 
@@ -123,14 +165,45 @@ class _TestsArr{
         }
 
         if(target.getAttribute("data-answ-id")){
-            let parent = target.closest(".test-block");
-            const questionId = parent.getAttribute("data-test-id");
-            let answerButton = parent.querySelector(".an__save");
-            if(answerButton.disabled == true){
-                this.updateSidebar(questionId,false);
-                answerButton.disabled = false;
-            }
+            this.unsaveAnswer(target);
         }
+    }
+
+    unsaveAnswer(target){
+        let parent = target.closest(".test-block");
+        const questionId = parent.getAttribute("data-test-id");
+        let answerButton = parent.querySelector(".an__save");
+        if(answerButton.disabled == true){
+            this.updateSidebar(questionId,false);
+            answerButton.disabled = false;
+            parent.querySelector(".question__saved").remove()
+        }
+    }
+
+    async handleInput(event){
+        const target = event.target;
+        const attribute = target.getAttribute("data-latexBlock");
+
+        if(attribute){
+            this.unsaveAnswer(target);
+            let value = target.value;
+            const destination = document.getElementById(`${attribute}`);
+
+            value = value.replace(/√/g,"�")
+            value = value.replace(/sqrt/g,"����")
+
+            destination.innerHTML = `
+            <img src="static/imgs/Page/test__loading.gif" alt="">
+            `
+            await Helpers.waitRandTime();
+
+            destination.innerHTML = `\\[${value}\\]`;
+            MathJax.typesetPromise([destination]);
+        }
+
+
+
+       
     }
 
     renderAll(){
@@ -153,13 +226,21 @@ class _TestsArr{
         const questionId = parent.getAttribute("data-test-id");
 
         const questionClass = this.contents.find((elem)=>{return elem.id == questionId})
+
         if(questionClass){
             let answerId = questionClass.getChosenAnswerId(parent);
             this.answers[questionId] = answerId;
         }
+
         localStorage.setItem(this.id,JSON.stringify(this.answers))
-        console.log(this.answers)
         this.updateSidebar(questionId,true)
+
+        parent.insertAdjacentHTML("beforeend",`
+        <div class="question__saved">
+            <p class="saved__icon">i</p>
+            <p class="saved__text">Відповідь збережено</p>
+        </div>
+            `)
     }
 
     updateSidebar(id,toggler){
@@ -187,7 +268,9 @@ class _TestsArr{
                 for(let answer of i.answers){
                     answers.push(new Answer(answer))
                 }
-                this.contents.push(new SingleAnswer(i.question,answers,""))
+                this.contents.push(new SingleAnswer(i.question,answers,i.img))
+            }else if(i.type == 2){
+                this.contents.push(new OpenAnswer(i.question,i.mg))
             }
         }
     }
@@ -199,6 +282,7 @@ class MathTests extends _TestsArr{
         this.body = document.querySelector("#main__maths");
         this.side = document.querySelector("#side__maths");
         this.body.addEventListener("click",this.handleClick.bind(this))
+        this.body.addEventListener("input",this.handleInput.bind(this))
     }
 }
 
@@ -232,6 +316,11 @@ const testsArray = [
         type:1,
         question:"",
         answers:[""],
+        img:"/static/imgs/Tests/Maths/2.png"
+    },
+    {
+        type:2,
+        question:` Нехай у готелі є 23493248 номерів, з яких 3223 зайняті, але 379 можуть звільниться, а можуть і не звільнитись після 15:00. У готель заселяються 324234 людини, з яких 89632 хочуть жити по двох, а ще 34960 по трьох. У готелі є від 100000 до 300000 номерів, які підходять для двох, та інші від 100000 до 300000, які підходять для трьох. Розгляньте всі способи та варіанти для поселення гостей у готелі.`, 
         img:""
     }
 ]
