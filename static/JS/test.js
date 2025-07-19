@@ -1,32 +1,3 @@
-/**
- * Functionality
- * 1) Time save 
- * Local storage object every second
- * 2) Answers save 
- * Local storage object every answer save
- * {
- * maths: {id:answer}
- * }
- * 3) Saved answers display on sidebar
- * 
- * Task types
- * 1) With one variant of answer
- * - Plain text
- * - Image 
- * - Image + text
- * Answer - variable with answer ID
- * 2) Numerical input (input text)
- * variable
- * 3) Accordances
- * Answer: [array,array]
- * 4) Sequences
- * Answer: array
- * 5) 3 answers 
- * Answer: array
- * 
- * 
- */
-
 class Helpers{
     static waitRandTime(){
         let ms = Math.random()*1000
@@ -115,6 +86,7 @@ class SingleAnswer extends _Test{
 class OpenAnswer extends _Test{
     constructor(question,imgPath){
         super(question,imgPath);
+
     }
 
     renderView(index,savedAnswer){
@@ -146,6 +118,67 @@ class OpenAnswer extends _Test{
     }
 }
 
+class AccrodanceAnswer extends _Test{
+    constructor(question,imgPath,questions,answers){
+        super(question,imgPath);
+        this.questions = questions;
+        this.answers = answers;
+    }
+
+    renderView(index,selectedAnswers){
+        let questionStr = '';
+        let answerStr = ``;
+        for(let i = 0;i< this.questions.length; i++){
+            let selectedAnsw = selectedAnswers? this.answers.find((elem)=>elem.id == selectedAnswers[i]): false;
+            questionStr += `
+            <div class="acc-an__row">
+                <div class="row__question">${this.questions[i]}</div>
+                <span class="row__arrow">&rarr;</span>
+                <div class="row__place">
+                    ${selectedAnsw ? `<div class="acc-an__answer selected" data-answ-id="${this.answers[i].id}" id="acc-an__answer-${selectedAnsw.id}">${selectedAnsw.answer}</div>` : ""}
+                    <div class="row__close-button">x</div>
+                </div>
+            </div>
+            `
+        }
+
+        for(let i = 0;i< this.answers.length; i++){
+            if(selectedAnswers && selectedAnswers[i]) continue;
+            answerStr += `
+                <div class="acc-an__answer" data-answ-id="${this.answers[i].id}" id="acc-an__answer-${this.answers[i].id}">${this.answers[i].answer}</div>
+            `
+        }
+
+        this.view = `
+        <div class="main__block test-block acc-an" id="test-block__${this.id}" data-test-id="${this.id}">
+            <h2 class="question__number">Завдання ${index+1}</h2>
+            ${this.questionInfo}
+            <form onsubmit="return false" class="acc-an__form">
+                <div class="form__body">
+                    <div class="acc-an__rows">
+                        ${questionStr}
+                    </div>
+                    <div class="acc-an__answers">
+                        ${answerStr}
+                    </div>
+                </div>
+                <div class="form__block">
+                    <button class="an__save" disabled>Зберегти відповідь</button>
+                </div>
+            </form>
+        </div>
+        `
+    }
+
+    getChosenAnswerId(parent){
+        let answers = [];
+        Array.from(parent.querySelectorAll(".acc-an__row")).forEach((row)=>{
+            answers.push(row.querySelector(".acc-an__answer.selected")?.getAttribute("data-answ-id") || null) 
+        })
+        return answers;
+    }
+}
+
 class _TestsArr{
     static testsArrId = 0;
     constructor(){
@@ -167,6 +200,9 @@ class _TestsArr{
         if(target.getAttribute("data-answ-id")){
             this.unsaveAnswer(target);
         }
+
+        this.clickOnAccordance(target)
+
     }
 
     unsaveAnswer(target){
@@ -176,7 +212,8 @@ class _TestsArr{
         if(answerButton.disabled == true){
             this.updateSidebar(questionId,false);
             answerButton.disabled = false;
-            parent.querySelector(".question__saved").remove()
+            let questionSavedInfo = parent.querySelector(".question__saved");
+            if(questionSavedInfo) questionSavedInfo.remove()
         }
     }
 
@@ -252,11 +289,34 @@ class _TestsArr{
         }
     }
 
+    clickOnAccordance(target){
+        let parent = target.closest(".test-block");
+        let selectedAnswer = parent.querySelector(".acc-an__answer.active");
+        if(target.classList.contains("row__place")){
+            if(!selectedAnswer || target.querySelector(".acc-an__answer.selected")) return
+            
+            target.appendChild(selectedAnswer);
+            selectedAnswer.classList.remove("active");
+            selectedAnswer.classList.add("selected")
+            target.querySelector(".row__close-button").classList.add("active")
+            this.unsaveAnswer(target)
+        }
+        if(target.classList.contains("acc-an__answer")){
+            if(selectedAnswer) return;
+            target.classList.toggle("active");
+        }
+        if(target.classList.contains("row__close-button")){
+            let insertedAnswer = target.closest(".row__place").querySelector(".acc-an__answer.selected");
+            parent.querySelector(".acc-an__answers").appendChild(insertedAnswer)
+            this.unsaveAnswer(target)
+
+        }
+    }
+
     /**
      * types: 
      * - 1 - sin-an (single)
      * - 2 - open-an
-     * - 3 - seq-an (sequence)
      * - 4 - mult-an (multiple)
      * - 5 - accord-an (accordance)
      */
@@ -271,6 +331,15 @@ class _TestsArr{
                 this.contents.push(new SingleAnswer(i.question,answers,i.img))
             }else if(i.type == 2){
                 this.contents.push(new OpenAnswer(i.question,i.mg))
+            }else if(i.type==5){
+                let answers = [];
+                for(let item of i.answers[1]){
+                    answers.push(new Answer(item));
+                }
+
+                this.contents.push(
+                    new AccrodanceAnswer(i.question,i.img,i.answers[0],answers)
+                )
             }
         }
     }
@@ -322,7 +391,19 @@ const testsArray = [
         type:2,
         question:` Нехай у готелі є 23493248 номерів, з яких 3223 зайняті, але 379 можуть звільниться, а можуть і не звільнитись після 15:00. У готель заселяються 324234 людини, з яких 89632 хочуть жити по двох, а ще 34960 по трьох. У готелі є від 100000 до 300000 номерів, які підходять для двох, та інші від 100000 до 300000, які підходять для трьох. Розгляньте всі способи та варіанти для поселення гостей у готелі.`, 
         img:""
-    }
+    },
+    {
+        type:5,
+        question:`Поєдайнте імена діячів з їх прізвиськами`,
+        answers:[["1. Н. Громов","2. Д. Безкоровайний","3. М. Лаврів","4. О. Рейнський"],["Машина","Жид","Шмякс","Бібізяна"]],
+        img:""
+    },
+        {
+        type:5,
+        question:`Установіть послідовність подій`,
+        answers:[["1.","2.","3.","4."],["Набуття П. Порошенком статусу “надлюдини”","Заснування відкритого товариства рептилоїдів","Повернення НЛО на землю в зоні 51","Ядерна війна між 2 Євразійською імперією та атлантами"]],
+        img:""
+    },
 ]
 
 
@@ -333,3 +414,6 @@ mathBlock.renderAll();
 
 
 
+// document.addEventListener("keydown",(event)=>{
+//     if(event.code == "F11") event.preventDefault()
+// })
