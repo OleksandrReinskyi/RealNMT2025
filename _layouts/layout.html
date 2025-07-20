@@ -22,6 +22,23 @@
             <script src="{{file}}"></script>
         {% endfor %}
     {% endif %}
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Service worker -->
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", function () {
+            navigator.serviceWorker.register("/serviceWorker.js")
+            .then(function (registration) {
+                console.log("ServiceWorker registered with scope:", registration.scope);
+            })
+            .catch(function (error) {
+                console.error("ServiceWorker registration failed:", error);
+            });
+        });
+    }
+    </script>
 
 </head>
 <body>
@@ -36,6 +53,8 @@
         <script defer src="{{file}}"></script>
     {% endfor %}
 {% endif %}
+
+<script defer src="static/JS/general/blocks.js"></script>
 </body>
 
 </html>

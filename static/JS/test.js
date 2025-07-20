@@ -7,13 +7,42 @@ class Helpers{
     }
 }
 
+class Timer{
+    constructor(time,elem){
+        this.time = time; //seconds
+        this.stopped = false;
+        this.displayElem = elem;
+    }
+    countdown(){
+        if(this.stopped) return;
+        this.time -= 1;
+        this.renderView()
+        localStorage.setItem("timer",String(this.time))
+        setTimeout(this.countdown.bind(this),1000)
+    }
+    
+    renderView(){
+        let buffer = this.time;
+        let hours = Math.floor(buffer/(60*60))
+        buffer -= hours*60*60;
+        let minutes = Math.floor(buffer/(60))
+        buffer -= minutes*60
+        this.displayElem.innerText = `
+        ${hours<10? ("0"+hours): hours}:${minutes<10? ("0"+minutes): minutes}:${buffer<10? ("0"+buffer): buffer}
+        `
+    }
+
+}
+
+
 class _Test{
     static idCounter = 0;
-    constructor(question,imgPath){
+    constructor(question,imgPath,audioPath){
         this.id = _Test.idCounter++;
         this.view = "";
         this.question = question;
         this.img = imgPath;
+        this.audio = audioPath;
 
         this.infoBlockBeforeText = "";
         this.sidebarCell = null;
@@ -31,7 +60,10 @@ class _Test{
         this.questionInfo = `
             <div class="question__info">
                 <div class="question__title">${this.question}</div>
-                ${this.img ? `<img class="question__img" src="${this.img}">` :""} 
+                ${this.img ? `<img class="question__img" src="${this.img}">` :""}
+                ${this.audio ? `<audio controls>
+                    <source src="${this.audio}" type="audio/ogg"> </audio>` :""}
+
             </div>
         `
 
@@ -44,8 +76,8 @@ class _Test{
 }
 
 class SingleAnswer extends _Test{
-    constructor(question,answers,imgPath){
-        super(question,imgPath);
+    constructor(question,answers,imgPath,audioPath){
+        super(question,imgPath,audioPath);
         this.answers = answers;
     }
 
@@ -179,6 +211,47 @@ class AccrodanceAnswer extends _Test{
     }
 }
 
+class MultipleAnswer extends _Test{
+    constructor(question,imgPath,answers){
+        super(question,imgPath);
+        this.answers = answers;
+    }
+
+    renderView(index, selectedAnswers){
+
+        let answersString = '';
+        for(let i of this.answers){
+            answersString += `
+             <div class="form__block">
+                <input class="mult-an__input" type="checkbox" name="${this.id}-answ" id="mult-an-${i.id}" data-answ-id="${i.id}" ${selectedAnswers?.includes(String(i.id)) ? "checked" : ""}>
+                <label for="mult-an-${i.id}" class="mult-an__answer">${i.answer}</label>
+            </div>`
+        }
+
+        this.view += `
+        <div class="main__block test-block mult-an" id="test-block__${this.id}" data-test-id="${this.id}">
+            <h2 class="question__number">Завдання ${index+1}</h2>
+            ${this.questionInfo}
+            <form  class="mult-an__form" onsubmit="return false">
+            ${answersString}
+                <div class="form__block">
+                    <button class="an__save" disabled>Зберегти відповідь</button>
+                </div>
+            </form>
+        </div>
+        `
+
+    }
+
+    getChosenAnswerId(parent){
+        let arr = []
+        Array.from(parent.querySelectorAll(".mult-an__input:checked")).forEach((item)=>{
+            arr.push(item.getAttribute("data-answ-id"))
+        })
+        return arr;
+    }
+}
+
 class _TestsArr{
     static testsArrId = 0;
     constructor(){
@@ -199,6 +272,11 @@ class _TestsArr{
 
         if(target.getAttribute("data-answ-id")){
             this.unsaveAnswer(target);
+        }
+
+        if(target.classList.contains("mult-an__input")){
+            let parent = target.closest(".test-block");
+            if(parent.querySelectorAll(".mult-an__input:checked").length >= 4) event.preventDefault();
         }
 
         this.clickOnAccordance(target)
@@ -235,12 +313,8 @@ class _TestsArr{
             await Helpers.waitRandTime();
 
             destination.innerHTML = `\\[${value}\\]`;
-            MathJax.typesetPromise([destination]);
+            await MathJax.typesetPromise([destination]);
         }
-
-
-
-       
     }
 
     renderAll(){
@@ -313,6 +387,8 @@ class _TestsArr{
         }
     }
 
+
+
     /**
      * types: 
      * - 1 - sin-an (single)
@@ -328,7 +404,7 @@ class _TestsArr{
                 for(let answer of i.answers){
                     answers.push(new Answer(answer))
                 }
-                this.contents.push(new SingleAnswer(i.question,answers,i.img))
+                this.contents.push(new SingleAnswer(i.question,answers,i.img,i.audio))
             }else if(i.type == 2){
                 this.contents.push(new OpenAnswer(i.question,i.mg))
             }else if(i.type==5){
@@ -340,6 +416,13 @@ class _TestsArr{
                 this.contents.push(
                     new AccrodanceAnswer(i.question,i.img,i.answers[0],answers)
                 )
+            }else if(i.type == 4){
+                let answersArr = [];
+                for(let item of i.answers){
+                    answersArr.push(new Answer(item))
+                }
+
+                this.contents.push(new MultipleAnswer(i.question,i.img,answersArr))
             }
         }
     }
@@ -398,11 +481,19 @@ const testsArray = [
         answers:[["1. Н. Громов","2. Д. Безкоровайний","3. М. Лаврів","4. О. Рейнський"],["Машина","Жид","Шмякс","Бібізяна"]],
         img:""
     },
-        {
-        type:5,
-        question:`Установіть послідовність подій`,
-        answers:[["1.","2.","3.","4."],["Набуття П. Порошенком статусу “надлюдини”","Заснування відкритого товариства рептилоїдів","Повернення НЛО на землю в зоні 51","Ядерна війна між 2 Євразійською імперією та атлантами"]],
-        img:""
+    {
+        type:4,
+        question:`Охарактеризуйте зображеного діяча`,
+        answers:["Позитивний","Розумний","Надихаючий","Вірний","Працьовитий","Смішний","Найкращий"],
+        img:"/static/imgs/Tests/History/15.png"
+
+    },
+    {
+        type:1,
+        question: "За наступним аудіозаписом визначіть задукоментовану історичну подію",
+        answers:["Варшавський інцидент “постріл”","Підготовка до операції “Капкан: Єремія”","Трагедія під ліжком","Операція “Suntago: прозора гірка”"],
+        img: null,
+        audio:"static/imgs/Tests/History/SpookySound.mp3"
     },
 ]
 
@@ -412,8 +503,9 @@ const mathBlock = new MathTests()
 mathBlock.convertTestsArr(testsArray)
 mathBlock.renderAll();
 
+const timer = new Timer(localStorage.getItem("timer") || 2*60*60,document.querySelector("#popup__timer"))
+
+timer.renderView()
+timer.countdown()
 
 
-// document.addEventListener("keydown",(event)=>{
-//     if(event.code == "F11") event.preventDefault()
-// })

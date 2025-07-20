@@ -1,0 +1,15 @@
+{
+  "name": "RealNMT2025",
+  "short_name": "НМТ",
+  "start_url": "/",
+  "display": "fullscreen",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "static/imgs/Page/HeaderLogo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
