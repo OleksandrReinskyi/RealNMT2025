@@ -431,7 +431,7 @@ class _TestsArr{
 class MathTests extends _TestsArr{
     constructor(contents){
         super(contents);
-        this.body = document.querySelector("#main__maths");
+        this.body = document.querySelector("#maths__body");
         this.side = document.querySelector("#side__maths");
         this.body.addEventListener("click",this.handleClick.bind(this))
         this.body.addEventListener("input",this.handleInput.bind(this))
@@ -441,8 +441,11 @@ class MathTests extends _TestsArr{
 class HistTests extends _TestsArr{
     constructor(contents){
         super(contents);
-        this.body = document.querySelector("#main__hist");
+        this.body = document.querySelector("#hist__body");
+        this.side = document.querySelector("#side__hist");
         this.body.addEventListener("click",this.handleClick.bind(this))
+        this.body.addEventListener("input",this.handleInput.bind(this))
+
     }
 }
 
@@ -457,7 +460,7 @@ class Answer{
 
 
 
-const testsArray = [
+const mathTestsArray = [
     {
         type:1,
         question: "2+2=...?",
@@ -474,8 +477,12 @@ const testsArray = [
         type:2,
         question:` Нехай у готелі є 23493248 номерів, з яких 3223 зайняті, але 379 можуть звільниться, а можуть і не звільнитись після 15:00. У готель заселяються 324234 людини, з яких 89632 хочуть жити по двох, а ще 34960 по трьох. У готелі є від 100000 до 300000 номерів, які підходять для двох, та інші від 100000 до 300000, які підходять для трьох. Розгляньте всі способи та варіанти для поселення гостей у готелі.`, 
         img:""
-    },
-    {
+    }
+   
+]
+
+const histTestsArray = [
+     {
         type:5,
         question:`Поєдайнте імена діячів з їх прізвиськами`,
         answers:[["1. Н. Громов","2. Д. Безкоровайний","3. М. Лаврів","4. О. Рейнський"],["Машина","Жид","Шмякс","Бібізяна"]],
@@ -494,14 +501,16 @@ const testsArray = [
         answers:["Варшавський інцидент “постріл”","Підготовка до операції “Капкан: Єремія”","Трагедія під ліжком","Операція “Suntago: прозора гірка”"],
         img: null,
         audio:"static/imgs/Tests/History/SpookySound.mp3"
-    },
+    }
 ]
 
-
-
 const mathBlock = new MathTests()
-mathBlock.convertTestsArr(testsArray)
+mathBlock.convertTestsArr(mathTestsArray)
 mathBlock.renderAll();
+
+const histBlock = new HistTests()
+histBlock.convertTestsArr(histTestsArray)
+histBlock.renderAll()
 
 const timer = new Timer(localStorage.getItem("timer") || 2*60*60,document.querySelector("#popup__timer"))
 
@@ -509,3 +518,61 @@ timer.renderView()
 timer.countdown()
 
 
+
+
+class displayTestsBar{
+    constructor(){
+        this.show = 0;
+        this.blocksArr = ["main__maths","main__hist"];
+        this.headerControls = ["main-header__maths","main-header__history"];
+        this.sideBars= ["side__maths","side__hist"]
+    }
+    showTestByTitle(attrShow){
+        for(let i = 0; i <this.blocksArr.length;i++){
+            if(i == attrShow){
+                document.getElementById(this.blocksArr[i]).classList.add("active")
+                this.show = i;
+                document.getElementById(this.headerControls[i]).classList.add("active")
+                document.getElementById(this.sideBars[i]).classList.add("active")
+                
+            }else{
+                document.getElementById(this.blocksArr[i]).classList.remove("active")
+                document.getElementById(this.headerControls[i]).classList.remove("active")
+                document.getElementById(this.sideBars[i]).classList.remove("active")
+
+            }
+        }
+    }
+    showTestByButton(attrControl){
+        switch(attrControl){
+            case "left":
+                if(this.show == 0) this.show = this.blocksArr.length-1;
+                else this.show--;
+                break;
+            case "right":
+                if(this.show == this.blocksArr.length-1) this.show = 0;
+                else this.show++;
+                break;
+            default:
+                break;
+        }
+        this.showTestByTitle(this.show)
+    }
+}
+
+let displayTests = new displayTestsBar();
+
+document.addEventListener("click",(event)=>{
+    let target = event.target;
+    let attrShow = target.getAttribute("data-show");
+    if(attrShow){
+        displayTests.showTestByTitle(attrShow);
+    }
+
+    let attrControl = target.getAttribute("data-control");
+    
+    if(attrControl){
+        displayTests.showTestByButton(attrControl)
+
+    }
+})

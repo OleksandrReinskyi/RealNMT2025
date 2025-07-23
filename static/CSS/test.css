@@ -40,12 +40,24 @@ main #test #test__container #test__main #main__container #main__header div.activ
 main #test #test__container #test__main #main__container #main__header .main__controls {
   width: 23%;
 }
+main #test #test__container #test__main #main__container #main__body > div {
+  display: none;
+}
+main #test #test__container #test__main #main__container #main__body > div.active {
+  display: block;
+}
 main #test #test__container #test__main, main #test #test__container #test__side {
   padding: 15px;
   border: 2px solid #b6b6b6;
 }
 main #test #test__container #test__side .side__cell.active {
   background-color: #e21c49;
+}
+main #test #test__container #test__side #side__body > div {
+  display: none;
+}
+main #test #test__container #test__side #side__body > div.active {
+  display: block;
 }
 
 /*# sourceMappingURL=test.css.map */

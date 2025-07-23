@@ -22,9 +22,6 @@ main{
             #test__main{
                 grid-column-start: 1;
                 grid-column-end: 6;
-
-
-
                 #main__container{
                     #main__header{
                         display: flex;
@@ -46,6 +43,14 @@ main{
                             width: 23%;
                         }
                     }
+                    #main__body{
+                        >div{
+                            display: none;
+                            &.active{
+                                display: block;
+                            }
+                        }
+                    } 
                 }
             }
 
@@ -60,8 +65,18 @@ main{
                         background-color: $redNormal;
                     }
                 }
+
+                #side__body{
+                    >div{
+                        display: none;
+                        &.active{
+                            display: block;
+                        }
+                    }
+                }
             }
 
         }
     }
+
 }

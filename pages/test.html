@@ -29,23 +29,29 @@ jsHead:
                     <div id="test__main">
                         <div id="main__container">
                             <div id="main__header">
-                                    <div class="main__controls">&lt;</div>
-                                    <div id="main-header__maths" data-show="main__maths">Математика</div>
-                                    <div id="main-header__history" data-show="main__hist">Історія України</div>
-                                    <div class="main__controls"> &gt; </div>
+                                    <div class="main__controls" data-control="left">&lt;</div>
+                                    <div id="main-header__maths" data-show="0" class="active">Математика</div>
+                                    <div id="main-header__history" data-show="1">Історія України</div>
+                                    <div class="main__controls" data-control="right"> &gt; </div>
                             </div>
                             <div id="main__body">
-                                <div id="main__maths">
-                                    
+                                <div id="main__maths" class="active">
+                                    <h1 id="maths__title">Математика</h1>
+                                    <div id="maths__body"></div>
                                 </div>
-                                <div id="main__hist"></div>
+                                <div id="main__hist">
+                                    <h1 id="hist__title">Історія України (і не тільки)</h1>
+                                    <div id="hist__body"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div id="test__side">
                         <h1 id="side__heading">Завдання</h1>
                         <div id="side__body">
-                            <div id="side__maths"></div>
+                            <div id="side__maths" class="active">
+
+                            </div>
                             <div id="side__hist"></div>
                         </div>
                     </div>
