@@ -471,7 +471,7 @@ const mathTestsArray = [
         type:1,
         question:"",
         answers:[""],
-        img:"/static/imgs/Tests/Maths/2.png"
+        img:"static/imgs/Tests/Maths/2.png"
     },
     {
         type:2,
@@ -492,7 +492,7 @@ const histTestsArray = [
         type:4,
         question:`Охарактеризуйте зображеного діяча`,
         answers:["Позитивний","Розумний","Надихаючий","Вірний","Працьовитий","Смішний","Найкращий"],
-        img:"/static/imgs/Tests/History/15.png"
+        img:"static/imgs/Tests/History/15.png"
 
     },
     {
@@ -574,5 +574,23 @@ document.addEventListener("click",(event)=>{
     if(attrControl){
         displayTests.showTestByButton(attrControl)
 
+    }
+})
+
+document.querySelector("#popup__finish-test").addEventListener("click", async (event)=>{
+    let historyLength = Object.keys(JSON.parse(localStorage.getItem(histBlock.id))).length;
+    let mathLength = Object.keys(JSON.parse(localStorage.getItem(mathBlock.id))).length;
+    console.log(historyLength,mathLength)
+    
+    if(historyLength == histTestsArray.length && mathLength == mathTestsArray.length){
+        await Helpers.waitRandTime();
+        document.getElementById("main__BSOD").classList.add("active");
+        document.querySelector("body").classList.add("died")
+    }else{
+        document.getElementById("popup__warning").innerText="Будь ласка, дайте відповідь на всі запитання!"
+        setTimeout(()=>{
+            document.getElementById("popup__warning").innerText=""
+
+        },5000)
     }
 })
