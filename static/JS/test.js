@@ -1,6 +1,6 @@
 class Helpers{
     static waitRandTime(){
-        let ms = Math.random()*1000
+        let ms = Math.random()*1500
         return new Promise((res,rej)=>{
             setTimeout(res,ms)
         })
@@ -50,10 +50,10 @@ class _Test{
     }
 
     renderInfoBlock(index,isAnswerSaved){
-        if(this.infoBlockBeforeText != ""){
-            this.view == `
+        if(this.infoBlockBeforeText){
+            this.view = `
         <div class="main__block info-block">
-            <div class="info-block__text">${this.infoBlockBeforeText}</div>
+            <h2 class="info-block__text">${this.infoBlockBeforeText}</h2>
         </div>`
         }
         
@@ -95,7 +95,7 @@ class SingleAnswer extends _Test{
 
         this.view += `
         <div class="main__block test-block sin-an" id="test-block__${this.id}" data-test-id="${this.id}">
-            <h2 class="question__number">Завдання ${index+1}</h2>
+            <h1 class="question__number">Завдання ${index+1}</h1>
             ${this.questionInfo}
             <form  class="sin-an__form" onsubmit="return false">
             ${answersString}
@@ -124,7 +124,7 @@ class OpenAnswer extends _Test{
     renderView(index,savedAnswer){
         this.view += `
         <div class="main__block test-block open-an" id="test-block__${this.id}" data-test-id="${this.id}">
-            <h2 class="question__number">Завдання ${index+1}</h2>
+            <h1 class="question__number">Завдання ${index+1}</h1>
             ${this.questionInfo}
             <form  class="open-an__form" onsubmit="return false">
                 <div class="form__block">
@@ -181,9 +181,9 @@ class AccrodanceAnswer extends _Test{
             `
         }
 
-        this.view = `
+        this.view += `
         <div class="main__block test-block acc-an" id="test-block__${this.id}" data-test-id="${this.id}">
-            <h2 class="question__number">Завдання ${index+1}</h2>
+            <h1 class="question__number">Завдання ${index+1}</h1>
             ${this.questionInfo}
             <form onsubmit="return false" class="acc-an__form">
                 <div class="form__body">
@@ -230,7 +230,7 @@ class MultipleAnswer extends _Test{
 
         this.view += `
         <div class="main__block test-block mult-an" id="test-block__${this.id}" data-test-id="${this.id}">
-            <h2 class="question__number">Завдання ${index+1}</h2>
+            <h1 class="question__number">Завдання ${index+1}</h1>
             ${this.questionInfo}
             <form  class="mult-an__form" onsubmit="return false">
             ${answersString}
@@ -329,7 +329,7 @@ class _TestsArr{
         }
     }
 
-    saveAnswer(target){
+    async saveAnswer(target){
         if(target.disabled == true) return;
         target.disabled = true;
         
@@ -343,12 +343,17 @@ class _TestsArr{
             this.answers[questionId] = answerId;
         }
 
+        target.innerText = "Відправлення на перевірку"
+
+        await Helpers.waitRandTime();
+        target.innerText = "Зберегти відповідь"
+
         localStorage.setItem(this.id,JSON.stringify(this.answers))
         this.updateSidebar(questionId,true)
 
         parent.insertAdjacentHTML("beforeend",`
         <div class="question__saved">
-            <p class="saved__icon">i</p>
+            <p class="saved__icon">𝐢</p>
             <p class="saved__text">Відповідь збережено</p>
         </div>
             `)
@@ -399,31 +404,32 @@ class _TestsArr{
 
     convertTestsArr(arr){
         for(let i of arr){
+            let question;
             if(i.type==1){
                 let answers = [];
                 for(let answer of i.answers){
                     answers.push(new Answer(answer))
                 }
-                this.contents.push(new SingleAnswer(i.question,answers,i.img,i.audio))
+                question = new SingleAnswer(i.question,answers,i.img,i.audio);
             }else if(i.type == 2){
-                this.contents.push(new OpenAnswer(i.question,i.mg))
+                question = new OpenAnswer(i.question,i.img)
             }else if(i.type==5){
                 let answers = [];
                 for(let item of i.answers[1]){
                     answers.push(new Answer(item));
                 }
 
-                this.contents.push(
-                    new AccrodanceAnswer(i.question,i.img,i.answers[0],answers)
-                )
+                question = new AccrodanceAnswer(i.question,i.img,i.answers[0],answers)
             }else if(i.type == 4){
                 let answersArr = [];
                 for(let item of i.answers){
                     answersArr.push(new Answer(item))
                 }
 
-                this.contents.push(new MultipleAnswer(i.question,i.img,answersArr))
+                question = new MultipleAnswer(i.question,i.img,answersArr)
             }
+            question.infoBlockBeforeText = i.blockInfo;
+            this.contents.push(question);
         }
     }
 }
@@ -465,7 +471,8 @@ const mathTestsArray = [
         type:1,
         question: "2+2=...?",
         answers:["2?!!?!?","4","5","1","0"],
-        img: null
+        img: null,
+        blockInfo: "Завдання 1-7 мають по чотири варіанти відповіді, з яких лише ОДИН правильний. Виберіть правильний, на Вашу думку, варіант відповіді й натисніть курсором на значок ліворуч від нього. Варіант відповіді, позначений Вами, ЗБЕРЕЖІТЬ, натиснувши курсором на кнопку під завданням."
     },
     {
         type:1,
@@ -476,23 +483,32 @@ const mathTestsArray = [
     {
         type:2,
         question:` Нехай у готелі є 23493248 номерів, з яких 3223 зайняті, але 379 можуть звільниться, а можуть і не звільнитись після 15:00. У готель заселяються 324234 людини, з яких 89632 хочуть жити по двох, а ще 34960 по трьох. У готелі є від 100000 до 300000 номерів, які підходять для двох, та інші від 100000 до 300000, які підходять для трьох. Розгляньте всі способи та варіанти для поселення гостей у готелі.`, 
-        img:""
+        img:"",
+        blockInfo:"Розв'яжіть завдання 8-10. Одержану числову відповідь упишіть у текстове поле під умовою завдання лише десятковим дробом, урахувавши положення коми. Знак «мінус» за потреби впишіть перед першою цифрою числа. Варіант відповіді, занесений у текстове поле, ЗБЕРЕЖІТЬ, натиснувши курсором на кнопку під завданням."
     }
    
 ]
 
 const histTestsArray = [
-     {
+    {
+        type:1,
+        question:"Якби Ви могли повернутись в минуле, з ким би Ви поспілкувались?",
+        answers:["Б. Хмельницький","Н. Махно","С. Бандера","Зі мною :3"],
+        blockInfo:"Завдання 1-13 мають по чотири варіанти відповіді, з яких лише ОДИН правильний. Виберіть правильний, на Вашу думку, варіант відповіді й натисніть курсором на значок ліворуч від нього. Варіант відповіді, позначений Вами, ЗБЕРЕЖІТЬ, натиснувши курсором на кнопку під завданням."
+    },
+    {
         type:5,
         question:`Поєдайнте імена діячів з їх прізвиськами`,
         answers:[["1. Н. Громов","2. Д. Безкоровайний","3. М. Лаврів","4. О. Рейнський"],["Машина","Жид","Шмякс","Бібізяна"]],
-        img:""
+        img:"",
+        blockInfo:"У завданнях 21-24 до кожного з чотирьох фрагментів інформації, позначених цифрою, доберіть один правильний, на Вашу думку, варіант, позначений буквою. Варіант відповіді, позначений Вами, ЗБЕРЕЖІТЬ, натиснувши курсором на кнопку під завданням."
     },
     {
         type:4,
         question:`Охарактеризуйте зображеного діяча`,
         answers:["Позитивний","Розумний","Надихаючий","Вірний","Працьовитий","Смішний","Найкращий"],
-        img:"static/imgs/Tests/History/15.png"
+        img:"static/imgs/Tests/History/15.png",
+        blockInfo:"Завдання 16 маж сім варіантів відповіді, з яких лише ТРИ правильні. Виберіть правильні, на Вашу думку, варіанти відповідей і натисніть курсором на значок нього. Варіанти відповідей ліворуч від 1, позначені Вами, ЗБЕРЕЖІТЬ, натиснувши курсором на кнопку під завданням."
 
     },
     {
@@ -501,6 +517,13 @@ const histTestsArray = [
         answers:["Варшавський інцидент “постріл”","Підготовка до операції “Капкан: Єремія”","Трагедія під ліжком","Операція “Suntago: прозора гірка”"],
         img: null,
         audio:"static/imgs/Tests/History/SpookySound.mp3"
+    },
+    {
+        type:5,
+        question:"Установіть послідовність подій",
+        answers: [["","","",""],["Набуття П. Порошенком статусу “надлюдини”","Заснування відкритого товариства рептилоїдів","Повернення НЛО на землю в зоні 51","Ядерна війна між 2 Євразійською імперією та атлантами"]],
+        blockInfo:`У завданні 15 розташуйте події (А-Г) в хронологічній послідовності. Цифрі 1 (перша подія) має відповідати вибрана Вами перша подія, цифрі 2 (друга подія) друга, цифрі 3 (третя подія) третя, цифрі 4 (четверта подія) четверта. Для цього натисніть курсором на інформацію, позначену буквою, а потім на порожнє поле навпроти цифри, яка відповідає вибраній події.
+        Ви можете змінити вибраний варіант відповіді: видаліть його, натиснувши курсором на значок. Після цього виберіть новий варіант Вашої відповіді. Після остаточного вибору ЗБЕРЕЖІТЬ відповідь, натиснувши курсором на кнопку під завданням.`        
     }
 ]
 
@@ -527,19 +550,23 @@ class displayTestsBar{
         this.headerControls = ["main-header__maths","main-header__history"];
         this.sideBars= ["side__maths","side__hist"]
     }
-    showTestByTitle(attrShow){
-        for(let i = 0; i <this.blocksArr.length;i++){
+    async showTestByTitle(attrShow){
+        for await(let i of Object.keys(this.blocksArr)){
             if(i == attrShow){
+                window.scrollTo({top:0,behavior:"smooth"})
+                await Helpers.waitRandTime();
                 document.getElementById(this.blocksArr[i]).classList.add("active")
                 this.show = i;
                 document.getElementById(this.headerControls[i]).classList.add("active")
                 document.getElementById(this.sideBars[i]).classList.add("active")
-                
-            }else{
-                document.getElementById(this.blocksArr[i]).classList.remove("active")
-                document.getElementById(this.headerControls[i]).classList.remove("active")
-                document.getElementById(this.sideBars[i]).classList.remove("active")
-
+                for(let j of Object.keys(this.blocksArr)){
+                    if(j!=i){
+                        document.getElementById(this.blocksArr[j]).classList.remove("active")
+                        document.getElementById(this.headerControls[j]).classList.remove("active")
+                        document.getElementById(this.sideBars[j]).classList.remove("active")
+                    }
+                   
+                }
             }
         }
     }
@@ -593,4 +620,8 @@ document.querySelector("#popup__finish-test").addEventListener("click", async (e
 
         },5000)
     }
+})
+
+document.querySelector("#popup__hide").addEventListener("click",(event)=>{
+    document.querySelector("#popup__timer").classList.toggle("hidden")
 })

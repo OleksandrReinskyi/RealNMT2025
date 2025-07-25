@@ -1,3 +1,9 @@
+main #test #test__container #test__main #main__container #main__body .test-block form .form__block:last-child button, main #global-popup #popup__container #popup__controls #popup__finish-test, main #global-popup #popup__container #popup__controls #popup__hide {
+  background-color: #e21c49;
+  color: #fff;
+  padding: 7px 15px;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -51,8 +57,87 @@ main #test #test__container #test__main #main__container #main__body > div {
 main #test #test__container #test__main #main__container #main__body > div.active {
   display: block;
 }
+main #test #test__container #test__main #main__container #main__body .body__title {
+  margin-top: 15px;
+  margin-bottom: 40px;
+}
+main #test #test__container #test__main #main__container #main__body .main__block:not(:last-child) {
+  margin-bottom: 30px;
+}
+main #test #test__container #test__main #main__container #main__body .info-block {
+  padding: 10px;
+  text-align: center;
+  border: 1px #e0e7e7 solid;
+  background-color: #eef5f5;
+}
+main #test #test__container #test__main #main__container #main__body .info-block .info-block__text {
+  font-weight: bold;
+  line-height: 1.2em;
+}
+main #test #test__container #test__main #main__container #main__body .test-block .question__info {
+  margin: 20px 0px;
+}
+main #test #test__container #test__main #main__container #main__body .test-block .question__info > *:not(:last-child) {
+  margin-bottom: 10px;
+}
+main #test #test__container #test__main #main__container #main__body .test-block .question__title {
+  font-size: 16px;
+}
+main #test #test__container #test__main #main__container #main__body .test-block form .form__block {
+  cursor: pointer;
+}
+main #test #test__container #test__main #main__container #main__body .test-block form .form__block label {
+  font-size: 16px;
+}
+main #test #test__container #test__main #main__container #main__body .test-block form .form__block:last-child {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+main #test #test__container #test__main #main__container #main__body .test-block form .form__block:last-child button {
+  border-radius: 10px;
+}
+main #test #test__container #test__main #main__container #main__body .test-block form .form__block:last-child button:disabled {
+  background-color: #b6b6b6;
+  color: #7f7f7f;
+}
+main #test #test__container #test__main #main__container #main__body .test-block .question__saved {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  border-top: 3px solid #e21c49;
+  padding: 5px 5px;
+}
+main #test #test__container #test__main #main__container #main__body .test-block .question__saved .saved__icon {
+  margin-right: 10px;
+  background-color: #e21c49;
+  color: #fff;
+  border-radius: 50px;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+}
+main #test #test__container #test__main #main__container #main__body .sin-an form .form__block:not(:last-child), main #test #test__container #test__main #main__container #main__body .mult-an form .form__block:not(:last-child) {
+  margin-bottom: 5px;
+  border: 1px solid #b6b6b6;
+  padding: 7px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+main #test #test__container #test__main #main__container #main__body .sin-an form .form__block:not(:last-child) input, main #test #test__container #test__main #main__container #main__body .mult-an form .form__block:not(:last-child) input {
+  margin-right: 10px;
+  cursor: pointer;
+}
+main #test #test__container #test__main #main__container #main__body .sin-an form .form__block:not(:last-child) label, main #test #test__container #test__main #main__container #main__body .mult-an form .form__block:not(:last-child) label {
+  width: 100%;
+  cursor: pointer;
+}
+main #test #test__container #test__main #main__container #main__body .sin-an form .form__block:not(:last-child):hover, main #test #test__container #test__main #main__container #main__body .mult-an form .form__block:not(:last-child):hover {
+  border-color: #e21c49;
+}
 main #test #test__container #test__main, main #test #test__container #test__side {
-  padding: 15px;
+  padding: 10px;
   border: 2px solid #b6b6b6;
 }
 main #test #test__container #test__side .side__cell.active {
@@ -69,12 +154,59 @@ main #main__BSOD {
   pointer-events: none;
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
 }
 main #main__BSOD.active {
   display: block;
+}
+main #global-popup {
+  position: sticky;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
+main #global-popup #popup__container {
+  height: 100%;
+  background-color: #e0e7e7;
+  border-left: 3px solid #e21c49;
+  padding: 20px 30px;
+  margin: 20px auto;
+  box-shadow: 0px 2px 4px #7e7e7e;
+}
+main #global-popup #popup__container > * {
+  margin-bottom: 10px;
+}
+main #global-popup #popup__container #popup__warning {
+  color: #e21c49;
+  font-weight: bold;
+}
+main #global-popup #popup__container #popup__controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+}
+main #global-popup #popup__container #popup__controls #popup__finish-test {
+  margin-right: 25px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 10px;
+}
+main #global-popup #popup__container #popup__controls #popup__timer {
+  display: inherit;
+  margin-right: 10px;
+  font-weight: bold;
+}
+main #global-popup #popup__container #popup__controls #popup__timer.hidden {
+  opacity: 0;
+}
+main #global-popup #popup__container #popup__controls #popup__hide {
+  color: #fff;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 /*# sourceMappingURL=test.css.map */

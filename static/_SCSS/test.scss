@@ -57,12 +57,109 @@ main{
                                 display: block;
                             }
                         }
+                        .body__title{
+                            margin-top: 15px;
+                            margin-bottom: 40px;
+                        }
+                        .main__block:not(:last-child){
+                            margin-bottom: 30px;
+                        }
+                        .info-block{
+                            padding: 10px;
+                            text-align: center;
+                            border: 1px $popupGrey solid;
+                            background-color: $backgroundBlue;
+                            .info-block__text{
+                                font-weight: bold;
+                                line-height: 1.2em;
+                            }
+                        }
+
+                        .test-block{
+
+                            .question__info{
+                                margin: 20px 0px;
+                                >*:not(:last-child){margin-bottom: 10px;}
+                            }
+                            .question__title{
+                                font-size: $textSmallHeadingFS;
+                            }
+
+
+
+                            form{
+                                .form__block{
+                                    cursor: pointer;
+                                    label{
+                                        font-size: $textSmallHeadingFS;
+                                    }
+                                    &:last-child{
+                                        margin-top: 20px;
+                                        margin-bottom: 10px;
+
+                                        button{
+                                            @extend %actionButton;
+                                            border-radius: 10px;
+                                            &:disabled{
+                                                background-color: $borderGrey;
+                                                color: $textGrey;
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                            }
+                            .question__saved{
+                                width: 100%;
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: start;
+                                border-top: 3px solid $redNormal;
+                                padding:5px 5px;
+                                .saved__icon{
+                                    margin-right: 10px;
+                                    background-color: $redNormal;
+                                    color: #fff;
+                                    border-radius: 50px;
+                                    width: 15px;
+                                    height: 15px;
+                                    text-align: center;
+                                }
+                            }
+                        }
+
+                        .sin-an,.mult-an{
+                            form{
+
+                                .form__block:not(:last-child){
+                                    margin-bottom: 5px;
+                                    border: 1px solid $borderGrey;
+                                    padding: 7px;
+                                    display: flex;
+                                    flex-direction: row;
+                                    justify-content: start;
+                                    input{
+                                        margin-right: 10px;
+                                        cursor: pointer;
+
+                                    }
+                                    label{
+                                        width: 100%;
+                                        cursor: pointer;
+                                    }
+
+                                    &:hover{
+                                        border-color: $redNormal;
+                                    }
+                                }
+                            }
+                        }
                     } 
                 }
             }
 
             #test__main,#test__side{
-                padding: 15px;
+                padding: 10px;
                 border: 2px solid $borderGrey;
             }
 
@@ -90,11 +187,62 @@ main{
         pointer-events: none;
         width: 100%;
         height: 100%;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         &.active{
             display: block;
+        }
+    }
+    #global-popup{
+        position: sticky;
+        top:20px;
+        left: 0;
+        width: 100%;
+        z-index: 1;
+       
+        #popup__container{
+            height: 100%;
+             background-color: $popupGrey;
+            border-left: 3px solid $redNormal;
+            padding: 20px 30px;
+            margin:20px auto;
+              box-shadow: 0px 2px 4px #7e7e7e;
+            >*{
+                margin-bottom: 10px;
+            }
+            #popup__warning{
+                color: $redNormal;
+                font-weight: bold;
+            }
+            #popup__controls{
+                display: flex;
+                flex-direction: row;
+                justify-content: end;
+                align-items: center;
+                #popup__finish-test{
+                    @extend %actionButton;
+                    margin-right: 25px;
+                    padding-top: 5px ;
+                    padding-bottom: 5px ;
+                    border-radius: 10px;
+                }
+                #popup__timer{
+                    display: inherit;
+                    margin-right: 10px;
+                    font-weight: bold;
+                    &.hidden{
+                        opacity: 0;
+                    }
+                }
+                #popup__hide{
+                    @extend %actionButton;
+                    color: #fff;
+                    padding-top: 5px ;
+                    padding-bottom: 5px ;
+                    
+                }
+            }
         }
     }
 }

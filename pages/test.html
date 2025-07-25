@@ -15,6 +15,18 @@ jsHead:
 ---
 
 <main class="container">
+    <section id="global-popup" >
+        <div id="popup__container" class="container">
+            <p id="popup__text">НМТ-2025 обмежений у часі. Таймер праворуч показує, скільки хвилин залишилося до кінця роботи. Вибравши відповідь на завдання, не забудьте натиснути на "Зберегти відповідь" для кожного завдання. Якщо Ви цього не зробите, відповідь не буде збережено і зараховано. Перш ніж натиснути на "Завершити роботу над тестом", перевірте, чи зберегли всі надані відповіді</p>
+            <h2 id="popup__warning">
+            </h2>
+            <div id="popup__controls">
+                <button id="popup__finish-test">Завершити роботу над тестом</button>
+                <span id="popup__timer"></span>
+                <button id="popup__hide">X</button>
+            </div>
+        </div>
+    </section>
     <section id="tabs">
         <div id="tabs__header">
             <div class="tab__title active" data-for="test">
@@ -36,11 +48,11 @@ jsHead:
                             </div>
                             <div id="main__body">
                                 <div id="main__maths" class="active">
-                                    <h1 id="maths__title">Математика</h1>
+                                    <h1 id="maths__title" class="body__title">Математика</h1>
                                     <div id="maths__body"></div>
                                 </div>
                                 <div id="main__hist">
-                                    <h1 id="hist__title">Історія України (і не тільки)</h1>
+                                    <h1 id="hist__title" class="body__title">Історія України (і не тільки)</h1>
                                     <div id="hist__body"></div>
                                 </div>
                             </div>
@@ -61,17 +73,6 @@ jsHead:
         </div>
     </section>
 
-    <section id="global-popup">
-        <div id="popup__container">
-            <p id="popup__text">НМТ-2025 обмежений у часі. Таймер праворуч показує, скільки хвилин залишилося до кінця роботи. Вибравши відповідь на завдання, не забудьте натиснути на "Зберегти відповідь" для кожного завдання. Якщо Ви цього не зробите, відповідь не буде збережено і зараховано. Перш ніж натиснути на "Завершити роботу над тестом", перевірте, чи зберегли всі надані відповіді</p>
-            <p id="popup__warning">
-            </p>
-            <div id="popup__controls">
-                <button id="popup__finish-test">Завершити роботу над тестом</button>
-                <div id="popup__timer"></div>
-                <button id="popup__hide">X</button>
-            </div>
-        </div>
-    </section>
+
     <img id="main__BSOD" src="static/imgs/Page/BSODFinal.png" alt="" >
 </main>
