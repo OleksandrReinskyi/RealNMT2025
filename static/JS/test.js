@@ -1,9 +1,23 @@
 class Helpers{
-    static waitRandTime(){
-        let ms = Math.random()*1500
+    static waitRandTime(coef){
+        let ms = Math.random()*coef
         return new Promise((res,rej)=>{
             setTimeout(res,ms)
         })
+    }
+    static toggleGlobalLoading(){
+        document.querySelector("#main__loading").classList.toggle("hidden")
+    }
+    static async simulateLoadingDecorator(func){
+        Helpers.toggleGlobalLoading()
+        timer.stop()
+        await Helpers.waitRandTime(2000);
+
+        func()
+
+        Helpers.toggleGlobalLoading()
+        timer.continue()
+
     }
 }
 
@@ -31,7 +45,14 @@ class Timer{
         ${hours<10? ("0"+hours): hours}:${minutes<10? ("0"+minutes): minutes}:${buffer<10? ("0"+buffer): buffer}
         `
     }
+    stop(){
+        this.stopped = true;
+    }
 
+    continue(){
+        this.stopped = false
+        this.countdown()
+    }
 }
 
 
@@ -130,7 +151,7 @@ class OpenAnswer extends _Test{
                 <div class="form__block">
                     <input class="open-an__input" type="text" data-latexBlock="latex__${this.id}" value="${savedAnswer}">
                 </div>
-                <div class="form__block" id="latex__${this.id}">
+                <div class="form__block open-an__latex" id="latex__${this.id}">
 
                 </div>
                 <div class="form__block">
@@ -307,10 +328,11 @@ class _TestsArr{
             value = value.replace(/√/g,"�")
             value = value.replace(/sqrt/g,"����")
 
+
             destination.innerHTML = `
-            <img src="static/imgs/Page/test__loading.gif" alt="">
+            <img src="static/imgs/Page/loading-waiting.gif" alt="">
             `
-            await Helpers.waitRandTime();
+            await Helpers.waitRandTime(1000);
 
             destination.innerHTML = `\\[${value}\\]`;
             await MathJax.typesetPromise([destination]);
@@ -345,7 +367,7 @@ class _TestsArr{
 
         target.innerText = "Відправлення на перевірку"
 
-        await Helpers.waitRandTime();
+        await Helpers.waitRandTime(1500);
         target.innerText = "Зберегти відповідь"
 
         localStorage.setItem(this.id,JSON.stringify(this.answers))
@@ -553,8 +575,12 @@ class displayTestsBar{
     async showTestByTitle(attrShow){
         for await(let i of Object.keys(this.blocksArr)){
             if(i == attrShow){
-                window.scrollTo({top:0,behavior:"smooth"})
-                await Helpers.waitRandTime();
+
+                await Helpers.simulateLoadingDecorator(()=>{
+                    window.scrollTo({top:0,behavior:"smooth"})
+                })
+
+
                 document.getElementById(this.blocksArr[i]).classList.add("active")
                 this.show = i;
                 document.getElementById(this.headerControls[i]).classList.add("active")
@@ -610,7 +636,7 @@ document.querySelector("#popup__finish-test").addEventListener("click", async (e
     console.log(historyLength,mathLength)
     
     if(historyLength == histTestsArray.length && mathLength == mathTestsArray.length){
-        await Helpers.waitRandTime();
+        await Helpers.waitRandTime(2000);
         document.getElementById("main__BSOD").classList.add("active");
         document.querySelector("body").classList.add("died")
     }else{

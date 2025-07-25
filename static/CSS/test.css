@@ -72,7 +72,7 @@ main #test #test__container #test__main #main__container #main__body .info-block
 }
 main #test #test__container #test__main #main__container #main__body .info-block .info-block__text {
   font-weight: bold;
-  line-height: 1.2em;
+  line-height: 1.5em;
 }
 main #test #test__container #test__main #main__container #main__body .test-block .question__info {
   margin: 20px 0px;
@@ -81,7 +81,8 @@ main #test #test__container #test__main #main__container #main__body .test-block
   margin-bottom: 10px;
 }
 main #test #test__container #test__main #main__container #main__body .test-block .question__title {
-  font-size: 16px;
+  font-size: 15px;
+  line-height: 1.2em;
 }
 main #test #test__container #test__main #main__container #main__body .test-block form .form__block {
   cursor: pointer;
@@ -136,6 +137,26 @@ main #test #test__container #test__main #main__container #main__body .sin-an for
 main #test #test__container #test__main #main__container #main__body .sin-an form .form__block:not(:last-child):hover, main #test #test__container #test__main #main__container #main__body .mult-an form .form__block:not(:last-child):hover {
   border-color: #e21c49;
 }
+main #test #test__container #test__main #main__container #main__body .open-an .open-an__input {
+  border: 1px solid #b6b6b6;
+  padding: 5px 10px;
+}
+main #test #test__container #test__main #main__container #main__body .open-an .open-an__latex {
+  display: inline-block;
+  width: auto;
+  height: auto;
+  background-color: #e0e7e7;
+  padding: 5px;
+  margin-top: 10px;
+  font-weight: bold;
+  border: 0.5px solid #b6b6b6;
+}
+main #test #test__container #test__main #main__container #main__body .open-an .open-an__latex img {
+  width: 30px;
+}
+main #test #test__container #test__main #main__container #main__body .open-an .open-an__latex mjx-container {
+  display: inline;
+}
 main #test #test__container #test__main, main #test #test__container #test__side {
   padding: 10px;
   border: 2px solid #b6b6b6;
@@ -157,13 +178,14 @@ main #main__BSOD {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 2;
 }
 main #main__BSOD.active {
   display: block;
 }
 main #global-popup {
   position: sticky;
-  top: 20px;
+  top: 10px;
   left: 0;
   width: 100%;
   z-index: 1;
@@ -174,10 +196,10 @@ main #global-popup #popup__container {
   border-left: 3px solid #e21c49;
   padding: 20px 30px;
   margin: 20px auto;
-  box-shadow: 0px 2px 4px #7e7e7e;
+  box-shadow: 0px 3px 4px #7e7e7e;
 }
-main #global-popup #popup__container > * {
-  margin-bottom: 10px;
+main #global-popup #popup__container > *:not(:last-child) {
+  margin-bottom: 20px;
 }
 main #global-popup #popup__container #popup__warning {
   color: #e21c49;
@@ -207,6 +229,24 @@ main #global-popup #popup__container #popup__controls #popup__hide {
   color: #fff;
   padding-top: 5px;
   padding-bottom: 5px;
+}
+main #main__loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3411764706);
+  z-index: 3;
+}
+main #main__loading.hidden {
+  display: none;
+}
+main #main__loading img {
+  width: 50px;
 }
 
 /*# sourceMappingURL=test.css.map */
