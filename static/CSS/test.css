@@ -4,6 +4,12 @@ main #test #test__container #test__main #main__container #main__body .test-block
   padding: 7px 15px;
 }
 
+main #test #test__container #test__main #main__container #main__body .acc-an form .form__body > div, main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__rows .acc-an__row .row__question, main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__rows .acc-an__row .row__place, main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__answers .acc-an__answer, main #test #test__container #test__side #side__body .side__block .side__cell {
+  border-radius: 5px;
+  border: 1px solid #b6b6b6;
+  padding: 10px;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -157,18 +163,125 @@ main #test #test__container #test__main #main__container #main__body .open-an .o
 main #test #test__container #test__main #main__container #main__body .open-an .open-an__latex mjx-container {
   display: inline;
 }
+main #test #test__container #test__main #main__container #main__body .acc-an form .form__body {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+main #test #test__container #test__main #main__container #main__body .acc-an form .form__body > div {
+  padding: 10px;
+}
+main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__rows {
+  width: 70%;
+  background-color: #cefcf6;
+  margin-right: 20px;
+}
+main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__rows .acc-an__row {
+  min-height: 70px;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  margin-bottom: 5px;
+}
+main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__rows .acc-an__row .row__arrow {
+  margin: 0 10px;
+  width: 5%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  scale: 2;
+  color: #928d91;
+}
+main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__rows .acc-an__row .row__question {
+  width: 55%;
+  background-color: #b3def9;
+}
+main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__rows .acc-an__row .row__question img {
+  width: 200px;
+}
+main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__rows .acc-an__row .row__place {
+  position: relative;
+  width: 40%;
+  background-color: #fff;
+}
+main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__rows .acc-an__row .row__place .row__close-container {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 5px;
+  display: flex;
+  align-items: center;
+}
+main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__rows .acc-an__row .row__place .row__close-container .row__close-button {
+  width: 20px;
+  height: 20px;
+  border: 0.5px solid #b6b6b6;
+  display: none;
+}
+main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__rows .acc-an__row .row__place.active {
+  background-color: #84f571;
+}
+main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__rows .acc-an__row .row__place.active .row__close-button {
+  display: inline;
+}
+main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__answers {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  background-color: #cffac9;
+}
+main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__answers > * {
+  margin-bottom: 5px;
+}
+main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__answers .acc-an__answer {
+  background-color: #84f571;
+  width: auto;
+  cursor: pointer;
+}
+main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__answers .acc-an__answer.active {
+  background-color: #dde2dc;
+}
 main #test #test__container #test__main, main #test #test__container #test__side {
   padding: 10px;
   border: 2px solid #b6b6b6;
 }
-main #test #test__container #test__side .side__cell.active {
-  background-color: #e21c49;
+main #test #test__container #test__side {
+  position: sticky;
+  top: 150px;
+  right: 0;
+  height: auto;
+  align-self: self-start;
 }
-main #test #test__container #test__side #side__body > div {
+main #test #test__container #test__side #side__heading {
+  text-align: center;
+  font-weight: bold;
+}
+main #test #test__container #test__side #side__body {
+  display: grid;
+  padding: 15px;
+}
+main #test #test__container #test__side #side__body .side__block {
   display: none;
+  gap: 5px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  justify-content: space-between;
 }
-main #test #test__container #test__side #side__body > div.active {
-  display: block;
+main #test #test__container #test__side #side__body .side__block.active {
+  display: grid;
+}
+main #test #test__container #test__side #side__body .side__block .side__cell {
+  color: #000;
+  padding: 13px 10px;
+  display: inline-block;
+  background-color: #e0e7e7;
+  text-align: center;
+}
+main #test #test__container #test__side #side__body .side__block .side__cell.active {
+  background-color: #e21c49;
+  color: #fff;
 }
 main #main__BSOD {
   display: none;

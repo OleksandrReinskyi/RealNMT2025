@@ -178,6 +178,99 @@ main{
                                 }
                             }
                         }
+
+                        .acc-an{
+                            form{
+                                .form__body{
+                                    width: 100%;
+                                    display: flex;
+                                    justify-content: space-between;
+                                    flex-direction: row;
+                                    >div{
+                                        @extend %borderAccordance;
+                                        padding: 10px;
+                                    }
+                                    .acc-an__rows{
+                                        width: 70%;          
+                                        background-color: #cefcf6;
+                                        margin-right: 20px;
+                                        .acc-an__row{
+                                            min-height:70px;
+
+                                            display: flex;
+                                            width: 100%;
+                                            flex-direction: row;
+                                            margin-bottom: 5px;
+                                            .row__arrow{
+                                                margin: 0 10px;
+                                                width: 5%;
+                                                display: flex;
+                                                align-content: center;
+                                                align-items: center;
+                                                justify-content: center;
+                                                scale: 2;
+                                                color: #928d91;
+                                            }
+                                            .row__question,.row__place{
+                                                @extend %borderAccordance;
+
+                                            }
+                                            .row__question{
+                                                width: 55%;
+                                                background-color: #b3def9;
+                                                img{
+                                                    width: 200px;
+                                                }
+                                            }
+                                            .row__place{
+                                                position: relative;
+                                                width: 40%;
+                                                background-color: #fff;
+                                                .row__close-container{        
+                                                    position: absolute;
+                                                    height: 100%;
+                                                    top: 0;
+                                                    right: 5px;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    .row__close-button{
+                                                        width: 20px;
+                                                        height: 20px;
+                                                        border: 0.5px solid $borderGrey;
+                                                        display: none;
+                                                }
+                                                }
+                                                &.active{
+                                                    background-color: #84f571;
+                                                    .row__close-button{
+                                                        display: inline;
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                    .acc-an__answers{
+                                        width: 30%;
+                                        display: flex;
+                                        flex-direction: column;
+                                        background-color: #cffac9;
+                                        >*{
+                                            margin-bottom: 5px;
+                                        }
+                                        .acc-an__answer{
+                                            background-color: #84f571;
+                                            width: auto;
+                                            @extend %borderAccordance;
+                                            cursor: pointer;
+                                            &.active{
+                                                background-color: #dde2dc;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     } 
                 }
             }
@@ -188,20 +281,46 @@ main{
             }
 
             #test__side{
-                .side__cell{
-                    &.active{
-                        background-color: $redNormal;
-                    }
+                position: sticky;
+                top:150px;
+                right: 0;
+                height: auto;
+                align-self: self-start;
+                #side__heading{
+                    text-align: center;
+                    font-weight: bold;
                 }
-
                 #side__body{
-                    >div{
-                        display: none;
+                    display: grid;
+                    padding: 15px;
+
+                    .side__block { 
                         &.active{
-                            display: block;
+                            display: grid;
+                        }                   
+                        display: none;
+                        gap: 5px;
+                        grid-template-columns: 1fr 1fr 1fr;
+                        grid-template-rows: auto;
+                        justify-content: space-between;
+                        .side__cell{
+                            color: #000;
+                            padding: 13px 10px;
+                            display: inline-block;
+                            background-color: $popupGrey;
+                            @extend %borderAccordance;
+                            text-align: center;
+                            &.active{
+                                background-color: $redNormal;
+                                color: #fff;
+                           }
                         }
                     }
+                    
                 }
+
+
+                
             }
 
         }

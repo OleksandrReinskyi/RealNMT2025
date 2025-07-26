@@ -31,3 +31,9 @@ $globalContainerWidth: 82vw;
     color: #fff;
     padding: 7px 15px;
 }
+
+%borderAccordance{
+    border-radius: 5px;
+    border: 1px solid $borderGrey;
+    padding: 10px;
+}
