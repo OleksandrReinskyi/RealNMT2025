@@ -28,14 +28,13 @@ main{
         #tabs__body{
             width: 100%;
             .tab{
-                min-height: 70vh;
                 height: auto;
                 width: 100%;
                 display: none;
                 &.active{
                     display: block;
                 }
-                border: 2px solid $borderGrey;
+                border: 1px solid $borderGrey;
 
             }
         }

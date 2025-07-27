@@ -8,22 +8,45 @@ main{
             
             #test{
                 #test__header{
-                    padding: 15px 12px;
 
                     &.active{
+                        display: block
+                    }
+                    #header__controls{
+                        padding: 15px 20px;
                         display: flex;
                         flex-direction: row;
                         justify-content: space-between;
-                        border-bottom: 2px solid $borderGrey;        
-                    }
+                        border-bottom: 1px solid $borderGrey;  
+                        #test__title{
 
-                    #test__title{
-
+                        }
+                        #test__button{
+                            @extend %actionButton;
+                            border-radius: 10px;
+                            
+                        }  
                     }
-                    #test__button{
-                        @extend %actionButton;
-                        border-radius: 10px;
-                        
+                    #header__info{
+                        padding: 15px 40px;
+                        #info__title{
+                            border-bottom: 1px solid $borderGrey;
+                            padding-bottom: 10px;
+                            position: relative;
+                            &::before{
+                                position: absolute;
+                                left: -17px;
+                                top: 0;
+                                content: "˅";
+                                display: inline-block;
+                                color: $redNormal;
+                                font-weight: bold;
+                                transform: scaleX(1.5);
+                            }
+                        }
+                        #info__time{
+                            padding: 10px 0px 0px 5px;
+                        }
                     }
                 }
                 
@@ -48,115 +71,208 @@ main{
                         margin-bottom: 20px;
                         line-height: 1.5em;
                     }
-                    span{
+                    .span__next{
                         display: block;
-                        margin-top: 60px;
+                        margin-top: 30px;
                         color: $redNormal;
                         text-decoration: underline;
                         font-weight: bold;
                         font-size: 16px;
                         cursor: pointer;
                     }
-                }
 
-                #test__captcha{
-                    width: 600px;
-                    margin: 0 auto;
-                    height: auto;
-                    background-color: #fff;
-                    #captcha__container{
-                        margin: 20px;
-                        width: auto;
-                        border: 1px $borderGrey solid;
-                        padding: 5px;
-                        #captcha__header{
-                            background-color: #1a74ec;
-                            padding: 25px 20px;
-                            color: #fff;
-                            h1{
-                                margin: 10px 0px;
-                                font-weight: bold;
-                            }
-                        }
-                        
-                        #captcha__body{
-                            display: grid;
-                            margin: 10px 0px;
-                            grid-template-columns: repeat(4,auto);
-                            grid-template-rows: repeat(4,auto);
-                            gap: 5px;
-                            .captcha__img{
-                                height: 118px;
-                                position: relative;
-                                width: 100%;
+                    #confirmation__captcha{
+                        position: relative;
+                        #captcha__block{
+                            display: inline-flex;
+                            width:300px ;
+                            flex-direction: row;
+                            border: 1px solid $borderGrey;
+                            padding: 5px 10px;
+                            background-color: #f9f9f9;
+                            border-radius: 3px;
+                            align-items: center;
+                            #captcha__checkbox{
+                                width: 30px;
+                                height: 30px;
+                                border: 2px solid #000;
+                                background-color: #fff;
+                                margin-right:10px ;
                                 cursor: pointer;
-                                transition: 0.1s all ease;
+                                transition: border-color 0.5s ease;
+
+                                animation-name: checkAnimate;
+                                animation-fill-mode: forwards;
+                                animation-duration: 0.5s;
+                                animation-iteration-count: 1;   
+                                animation-play-state: paused;
+                                animation-timing-function: steps(20,end);
                                 &.active{
-                                    transform: scale(0.9,0.9);
-                                    .captcha__tick{
-                                        opacity: 100%;
-                                    }
+                                    border-color: $borderGrey;
                                 }
-
-                                .captcha__tick{
-                                    width: 30px;
-                                    height: 30px;
-                                    opacity: 0%;
-                                    background-color:#1a74ec ;
-                                    position: absolute;
-                                    top: -10px;
-                                    left: -10px;
-                                    border-radius: 50px;
-
-                                    &::before, &::after{
-                                        content: "";
-                                        background-color: #fff;
-                                        height: 3px;
-                                        position:absolute;
-
-                                    }
-                                    &::before{
-                                        width: 10px;
-                                        transform: rotate(45deg);
-                                        top: 16px;
-                                        left: 4px;
-                                    }
-                                    &::after{
-                                        width: 20px;
-                                        transform: rotate(-45deg);
-                                        top: 14px;
-                                        left: 9px;
-                                    }
+                                &.checked{
+                                    background-image: url("../imgs/Page/captchaCheck.png");
+                                    animation-play-state: running;
+                                    border: none;
+                                    background-color: none;
 
                                 }
-
-                                img{
-                                    width: 100%;
-                                    height: 100%;
-                                    object-fit:fill;
+                                &.warning{
+                                    border-color: $redNormal;
                                 }
+                                @keyframes checkAnimate {
+                                    from{
+                                        background-position: -10px 0px;
+                                    }
+                                    to{
+                                        background-position: -10px -600px;
+                                    }
+                                }
+                            }
+                            img{
+                                width: 60px;
+                                object-fit: contain;
+                                margin-left: auto;
                             }
                         }
-
-                        #captcha__footer{
-                            border-top:1px solid $borderGrey ;
-                            padding: 25px 20px;
-                            color: #fff;
-                            display: flex;
-                            justify-content: end;
+                        #captcha__container{
+                            opacity: 0;
+                            pointer-events: none;
+                            transition: 0.5s all ease;
                             background-color: #fff;
-                            button{
-                                background-color: #1a74ec;
-                                color: #fff;
-                                font-size: 18px;
-                                padding: 10px 15px;
-                                
+                            &.active{
+                                opacity: 100%;
+                                pointer-events: all; 
                             }
+                            position: absolute;
+                            top: -350px;
+                            left: 200px;
+                            margin: 20px;
+                            width: 500px;
+                            border: 1px $borderGrey solid;
+                            padding: 5px;
+                                #captcha__header{
+                                    .header__pack{
+                                        display: none;
+                                        &.active{
+                                            display: block;
+                                        }
+                                        background-color: #1a74ec;
+                                        padding: 25px 20px;
+                                        color: #fff;
+                                        h1{
+                                            margin: 10px 0px;
+                                            font-weight: bold;
+                                        }
+                                    }
+                                    
+                                }
+                                
+                                #captcha__body{
+                                    background-color: #fff;
+                                    .captcha__pack{
+                                        display: none;
+                                        &.active{
+                                            display: flex;
+                                        }
+                                        width: 100%;
+                                        flex-direction: column;
+                                        .captcha__row{
+                                            display: flex;
+                                            flex-direction: row;
+                                            width: 100%;
+                                            margin-top: 5px;
+                                             .captcha__img{
+                                                flex-basis: auto;
+                                                flex-grow: 1;
+                                                position: relative;
+                                                display: inline-block;
+                                                cursor: pointer;
+                                                transition: 0.1s all ease;
+                                                &:not(:last-child){margin-right: 5px;}
+                                                img{
+                                                    width: 100%;
+                                                    object-fit: fill;
+                                                    max-height: 100px;
+                                                }
+
+                                                &.active{
+                                                    transform: scale(0.9,0.9);
+                                                    .captcha__tick{
+                                                        opacity: 100%;
+                                                    }
+                                                }
+
+                                                .captcha__tick{
+                                                    width: 30px;
+                                                    height: 30px;
+                                                    opacity: 0%;
+                                                    background-color:#1a74ec ;
+                                                    position: absolute;
+                                                    top: -10px;
+                                                    left: -10px;
+                                                    border-radius: 50px;
+
+                                                    &::before, &::after{
+                                                        content: "";
+                                                        background-color: #fff;
+                                                        height: 3px;
+                                                        position:absolute;
+
+                                                    }
+                                                    &::before{
+                                                        width: 10px;
+                                                        transform: rotate(45deg);
+                                                        top: 16px;
+                                                        left: 4px;
+                                                    }
+                                                    &::after{
+                                                        width: 20px;
+                                                        transform: rotate(-45deg);
+                                                        top: 14px;
+                                                        left: 9px;
+                                                    }
+
+                                                }
+
+
+                                            }
+                                        }
+                                        
+                                       
+                                    }
+                                    #captcha__warning{
+                                        margin: 10px 5px;
+                                        color: $redNormal;
+                                        display: none;
+                                        font-weight: bold;
+                                        &.active{
+                                            display: block;
+                                        }
+                                    }
+                                }
+
+                                #captcha__footer{
+                                    border-top:1px solid $borderGrey ;
+                                    padding: 25px 20px;
+                                    color: #fff;
+                                    display: flex;
+                                    justify-content: end;
+                                    background-color: #fff;
+                                    button{
+                                        background-color: #1a74ec;
+                                        color: #fff;
+                                        font-size: 18px;
+                                        padding: 10px 15px;
+                                        
+                                    }
+                                }
                         }
                     }
                 }
+
+               
                 #test__loading{
-                    height: 70vh;
                     &.active{
                         display: flex;
                         align-items: center;

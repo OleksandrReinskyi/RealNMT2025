@@ -72,3 +72,46 @@ document.addEventListener("click",async (event)=>{
         target.closest(".captcha__img").classList.toggle("active");
     }
 })
+
+const headerPacks = document.querySelectorAll(".header__pack")
+const bodyPacks = document.querySelectorAll(".captcha__pack");
+
+let packShown = 0;
+let confirmationPassed = false;
+
+document.querySelector("#captcha__button").addEventListener("click",(event)=>{
+    if(packShown == headerPacks.length-1){
+        confirmationPassed = true;
+        document.querySelector("#confirmation__button").classList.add("test__next");
+        document.querySelector("#captcha__checkbox").classList.add("checked")
+        document.querySelector("#captcha__container").classList.remove("active");
+        event.preventDefault();
+    }
+    if(packShown==headerPacks.length-2){
+        document.querySelector("#captcha__warning").classList.add("active")
+    }
+    packShown++;
+    for(let i = 0; i<headerPacks.length; i++){
+        console.log(headerPacks[i])
+        if(packShown == i){
+            headerPacks[i].classList.add("active")
+            bodyPacks[i].classList.add("active")
+        }else{
+            headerPacks[i].classList.remove("active")
+            bodyPacks[i].classList.remove("active")
+        }
+    }
+})
+
+document.querySelector("#confirmation__button").addEventListener("click",(event)=>{
+    if(!confirmationPassed){
+        document.querySelector("#captcha__checkbox").classList.add("warning")
+    }
+})
+
+document.querySelector("#captcha__checkbox").addEventListener("click",(event)=>{
+    document.querySelector("#captcha__container").classList.add("active");
+    headerPacks[packShown].classList.add("active")
+    bodyPacks[packShown].classList.add("active")
+    event.target.classList.add("active");
+})

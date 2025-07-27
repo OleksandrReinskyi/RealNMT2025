@@ -1,4 +1,5 @@
-main #tabs #tabs__body #test #test__header #test__button, main #tabs #tabs__body #instr #instr__buttons button {
+@charset "UTF-8";
+main #tabs #tabs__body #test #test__header #header__controls #test__button, main #tabs #tabs__body #instr #instr__buttons button {
   background-color: #e21c49;
   color: #fff;
   padding: 7px 15px;
@@ -7,17 +8,39 @@ main #tabs #tabs__body #test #test__header #test__button, main #tabs #tabs__body
 main #tabs {
   margin-top: 25px;
 }
-main #tabs #tabs__body #test #test__header {
-  padding: 15px 12px;
-}
 main #tabs #tabs__body #test #test__header.active {
+  display: block;
+}
+main #tabs #tabs__body #test #test__header #header__controls {
+  padding: 15px 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom: 2px solid #b6b6b6;
+  border-bottom: 1px solid #b6b6b6;
 }
-main #tabs #tabs__body #test #test__header #test__button {
+main #tabs #tabs__body #test #test__header #header__controls #test__button {
   border-radius: 10px;
+}
+main #tabs #tabs__body #test #test__header #header__info {
+  padding: 15px 40px;
+}
+main #tabs #tabs__body #test #test__header #header__info #info__title {
+  border-bottom: 1px solid #b6b6b6;
+  padding-bottom: 10px;
+  position: relative;
+}
+main #tabs #tabs__body #test #test__header #header__info #info__title::before {
+  position: absolute;
+  left: -17px;
+  top: 0;
+  content: "˅";
+  display: inline-block;
+  color: #e21c49;
+  font-weight: bold;
+  transform: scaleX(1.5);
+}
+main #tabs #tabs__body #test #test__header #header__info #info__time {
+  padding: 10px 0px 0px 5px;
 }
 main #tabs #tabs__body #test .test__block {
   display: none;
@@ -40,57 +63,138 @@ main #tabs #tabs__body #test #test__confirmation p {
   margin-bottom: 20px;
   line-height: 1.5em;
 }
-main #tabs #tabs__body #test #test__confirmation span {
+main #tabs #tabs__body #test #test__confirmation .span__next {
   display: block;
-  margin-top: 60px;
+  margin-top: 30px;
   color: #e21c49;
   text-decoration: underline;
   font-weight: bold;
   font-size: 16px;
   cursor: pointer;
 }
-main #tabs #tabs__body #test #test__captcha {
-  width: 600px;
-  margin: 0 auto;
-  height: auto;
-  background-color: #fff;
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha {
+  position: relative;
 }
-main #tabs #tabs__body #test #test__captcha #captcha__container {
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__block {
+  display: inline-flex;
+  width: 300px;
+  flex-direction: row;
+  border: 1px solid #b6b6b6;
+  padding: 5px 10px;
+  background-color: #f9f9f9;
+  border-radius: 3px;
+  align-items: center;
+}
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__block #captcha__checkbox {
+  width: 30px;
+  height: 30px;
+  border: 2px solid #000;
+  background-color: #fff;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: border-color 0.5s ease;
+  animation-name: checkAnimate;
+  animation-fill-mode: forwards;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-play-state: paused;
+  animation-timing-function: steps(20, end);
+}
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__block #captcha__checkbox.active {
+  border-color: #b6b6b6;
+}
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__block #captcha__checkbox.checked {
+  background-image: url("../imgs/Page/captchaCheck.png");
+  animation-play-state: running;
+  border: none;
+  background-color: none;
+}
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__block #captcha__checkbox.warning {
+  border-color: #e21c49;
+}
+@keyframes checkAnimate {
+  from {
+    background-position: -10px 0px;
+  }
+  to {
+    background-position: -10px -600px;
+  }
+}
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__block img {
+  width: 60px;
+  object-fit: contain;
+  margin-left: auto;
+}
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container {
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.5s all ease;
+  background-color: #fff;
+  position: absolute;
+  top: -350px;
+  left: 200px;
   margin: 20px;
-  width: auto;
+  width: 500px;
   border: 1px #b6b6b6 solid;
   padding: 5px;
 }
-main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__header {
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container.active {
+  opacity: 100%;
+  pointer-events: all;
+}
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__header .header__pack {
+  display: none;
   background-color: #1a74ec;
   padding: 25px 20px;
   color: #fff;
 }
-main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__header h1 {
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__header .header__pack.active {
+  display: block;
+}
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__header .header__pack h1 {
   margin: 10px 0px;
   font-weight: bold;
 }
-main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body {
-  display: grid;
-  margin: 10px 0px;
-  grid-template-columns: repeat(4, auto);
-  grid-template-rows: repeat(4, auto);
-  gap: 5px;
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__body {
+  background-color: #fff;
 }
-main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img {
-  height: 118px;
-  position: relative;
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__body .captcha__pack {
+  display: none;
   width: 100%;
+  flex-direction: column;
+}
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__body .captcha__pack.active {
+  display: flex;
+}
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__body .captcha__pack .captcha__row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 5px;
+}
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__body .captcha__pack .captcha__row .captcha__img {
+  flex-basis: auto;
+  flex-grow: 1;
+  position: relative;
+  display: inline-block;
   cursor: pointer;
   transition: 0.1s all ease;
 }
-main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img.active {
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__body .captcha__pack .captcha__row .captcha__img:not(:last-child) {
+  margin-right: 5px;
+}
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__body .captcha__pack .captcha__row .captcha__img img {
+  width: 100%;
+  object-fit: fill;
+  max-height: 100px;
+}
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__body .captcha__pack .captcha__row .captcha__img.active {
   transform: scale(0.9, 0.9);
 }
-main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img.active .captcha__tick {
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__body .captcha__pack .captcha__row .captcha__img.active .captcha__tick {
   opacity: 100%;
 }
-main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img .captcha__tick {
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__body .captcha__pack .captcha__row .captcha__img .captcha__tick {
   width: 30px;
   height: 30px;
   opacity: 0%;
@@ -100,30 +204,34 @@ main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .
   left: -10px;
   border-radius: 50px;
 }
-main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img .captcha__tick::before, main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img .captcha__tick::after {
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__body .captcha__pack .captcha__row .captcha__img .captcha__tick::before, main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__body .captcha__pack .captcha__row .captcha__img .captcha__tick::after {
   content: "";
   background-color: #fff;
   height: 3px;
   position: absolute;
 }
-main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img .captcha__tick::before {
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__body .captcha__pack .captcha__row .captcha__img .captcha__tick::before {
   width: 10px;
   transform: rotate(45deg);
   top: 16px;
   left: 4px;
 }
-main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img .captcha__tick::after {
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__body .captcha__pack .captcha__row .captcha__img .captcha__tick::after {
   width: 20px;
   transform: rotate(-45deg);
   top: 14px;
   left: 9px;
 }
-main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__body .captcha__img img {
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__body #captcha__warning {
+  margin: 10px 5px;
+  color: #e21c49;
+  display: none;
+  font-weight: bold;
 }
-main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__footer {
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__body #captcha__warning.active {
+  display: block;
+}
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__footer {
   border-top: 1px solid #b6b6b6;
   padding: 25px 20px;
   color: #fff;
@@ -131,14 +239,11 @@ main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__footer
   justify-content: end;
   background-color: #fff;
 }
-main #tabs #tabs__body #test #test__captcha #captcha__container #captcha__footer button {
+main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__container #captcha__footer button {
   background-color: #1a74ec;
   color: #fff;
   font-size: 18px;
   padding: 10px 15px;
-}
-main #tabs #tabs__body #test #test__loading {
-  height: 70vh;
 }
 main #tabs #tabs__body #test #test__loading.active {
   display: flex;

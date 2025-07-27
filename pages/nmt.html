@@ -22,41 +22,91 @@ js:
         <div id="tabs__body">
             <div id="test" class="tab active">
                 <div id="test__header" class="test__block active" data-num="1"> 
-                    <h1 id="test__title">НМНТ, 20.07.2025 року, час початку: 10:00</h1>
-                    <button id="test__button" class="test__next">Розпочати тест</button>
+                    <div id="header__controls">
+                        <h1 id="test__title">НМНТ, 31.07.2025 року, час початку: 10:00</h1>
+                        <button id="test__button" class="test__next">Розпочати тест</button>
+                    </div>
+                    <div id="header__info">
+                        <h2 id="info__title">НМНТ-2025</h2>
+                        <p id="info__time">
+                            Тест з обмеженим часом до 31 серпня 2025 року, 14:00 EEST
+                        </p>
+                    </div>
                 </div>
                 <div id="test__confirmation" class="test__block" data-num="2"> 
                     <h1>Тест "НМТ-2025" обмежений у часісімасісі (2 години)</h1>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus error reiciendis voluptatum voluptates. Incidunt quas iste, aliquam quia voluptatem maiores, repellendus tempore ut iusto dignissimos consequatur deserunt aperiam cumque! Tempore sunt minus repudiandae. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil, optio?</p>
                     <p>Accusantium distinctio at magni, doloribus ipsa fugiat laborum dolore rerum, omnis officiis, qui iusto laboriosam id. Quod sed eum eveniet repellat odit obcaecati neque praesentium ea commodi dolore? Eveniet eligendi autem reiciendis iste! Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus quas esse consectetur explicabo. Cumque provident magni harum totam expedita laboriosam?</p>
                     <p>Velit accusantium delectus ipsum minima id laboriosam? Asperiores modi earum odit alias culpa suscipit numquam perferendis beatae. Adipisci voluptatem nemo voluptates fugit in. Consequuntur repellendus, tempore laboriosam rerum ex corrupti non alias laudantium?</p>
-                    <span class="test__next">Розпочати роботу над тестом</span>
-                </div>
-                <div id="test__captcha" class="test__block" data-num="3"> 
-                    <div id="captcha__container">
-                        <div id="captcha__header">
-                            <p>Виберіть усі картинки з</p>
-                            <h1>"Піу-піу"</h1>
+                    <div id="confirmation__captcha"> 
+                        <div id="captcha__block">
+                            <div id="captcha__checkbox" ></div>
+                            <span id="captcha__text">Я не робот</span>
+                            <img src="static/imgs/Page/captchaLogo.png" alt="" id="captcha__img">
                         </div>
-                        <div id="captcha__body">
-                            {% for i in (1..16) %}
-                            <div class="captcha__img" id="img__{{i}}" >
-                                <img src="static/imgs/Page/Captcha/Maks_{{i}}.png" alt="" data-imgnum="{{i}}">
-                                <span class="captcha__tick"></span>
+                        <div id="captcha__container">
+                            <div id="captcha__header">
+                                <div class="header__pack">
+                                    <p>Виберіть усі картинки з</p>
+                                    <h1>"Світлофорами"</h1>
+                                </div>
+                                <div class="header__pack">
+                                    <p>Виберіть усі картинки з</p>
+                                    <h1>"Піу-піу"</h1>
+                                </div>
+                                
                             </div>
+                            <div id="captcha__body">
+                                <div class="captcha__pack" id="captcha__lights">
 
-                            {% endfor %}
-                        </div>
-                        <div id="captcha__footer">
-                            <button class="test__next">Далі</button>
+                                {% assign sum = 0 %}
+                                {% for i in (1..3) %}
+                                <div class="captcha__row">
+                                    {% for j in (1..3) %}
+                                    {% assign sum = sum | plus: 1 %}
+                                        <div class="captcha__img" id="img__lights{{sum}}" >
+                                            <img src="static/imgs/Page/Captcha/lights_0{{sum}}.png" data-imgnum="{{sum}}" >
+                                            <span class="captcha__tick"></span>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                {% endfor %}
+
+                                </div>
+
+                                <div class="captcha__pack" id="captcha__maks">
+                                {% assign sum2 = 0 %}
+
+                                {% for i in (1..4) %}
+                                <div class="captcha__row">
+                                    {% for j in (1..4) %}
+                                    {% assign sum2 = sum2 | plus: 1 %}
+                                        <div class="captcha__img" id="img__Maks{{sum2}}" >
+                                            <img src="static/imgs/Page/Captcha/Maks_{{sum2}}.png" data-imgnum="{{sum}}" >
+                                            <span class="captcha__tick"></span>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                {%endfor%}
+
+                                
+                                </div>
+                                <span id="captcha__warning">Виберіть усі картинки, що пасують!</span>
+                            <div id="captcha__footer">
+                                <button id="captcha__button">Далі</button>
+                                
+                            </div>
                         </div>
                     </div>
+                    <span id="confirmation__button" class="span__next">Розпочати роботу над тестом</span>
                 </div>
+
                 <div id="test__loading" class="test__block" data-num="4">
                     <h1>Завантаження ...</h1>
                     <img src="static/imgs/Page/loading.gif" alt="">
                 </div>
-            </div>
+                </div>
+                
             {% include materials.html %}
             <div id="instr" class="tab">
                 <div id="instr__info">
