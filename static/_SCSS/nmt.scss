@@ -273,6 +273,7 @@ main{
 
                
                 #test__loading{
+                    height: 60vh;
                     &.active{
                         display: flex;
                         align-items: center;
@@ -281,7 +282,21 @@ main{
                     }
                     img{
                         margin-top: 15px;
+                    }
+                }
 
+                #test__start{
+                    height: 60vh;
+                    width: 100%;
+                    justify-content: center;
+                    align-items: center;
+                    &.active{
+                        display: flex;
+                    }
+                    #start__button{
+                        @extend %actionButton;
+                        font-size: 20px;
+                        font-weight: bold;
                     }
                 }
             }
@@ -326,6 +341,7 @@ main{
                     align-items: center;
                 }
             }
+
         }
     }
 

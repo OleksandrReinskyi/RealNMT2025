@@ -1,5 +1,5 @@
 @charset "UTF-8";
-main #tabs #tabs__body #test #test__header #header__controls #test__button, main #tabs #tabs__body #instr #instr__buttons button {
+main #tabs #tabs__body #test #test__header #header__controls #test__button, main #tabs #tabs__body #test #test__start #start__button, main #tabs #tabs__body #instr #instr__buttons button {
   background-color: #e21c49;
   color: #fff;
   padding: 7px 15px;
@@ -245,6 +245,9 @@ main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha
   font-size: 18px;
   padding: 10px 15px;
 }
+main #tabs #tabs__body #test #test__loading {
+  height: 60vh;
+}
 main #tabs #tabs__body #test #test__loading.active {
   display: flex;
   align-items: center;
@@ -253,6 +256,19 @@ main #tabs #tabs__body #test #test__loading.active {
 }
 main #tabs #tabs__body #test #test__loading img {
   margin-top: 15px;
+}
+main #tabs #tabs__body #test #test__start {
+  height: 60vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+main #tabs #tabs__body #test #test__start.active {
+  display: flex;
+}
+main #tabs #tabs__body #test #test__start #start__button {
+  font-size: 20px;
+  font-weight: bold;
 }
 main #tabs #tabs__body #instr {
   text-align: center;

@@ -25,7 +25,6 @@ main #tabs #tabs__body {
   width: 100%;
 }
 main #tabs #tabs__body .tab {
-  height: auto;
   width: 100%;
   display: none;
   border: 1px solid #b6b6b6;
@@ -34,7 +33,7 @@ main #tabs #tabs__body .tab.active {
   display: block;
 }
 main #tabs #maths embed {
-  min-height: 70vh;
+  min-height: 85vh;
 }
 
 /*# sourceMappingURL=tabs.css.map */

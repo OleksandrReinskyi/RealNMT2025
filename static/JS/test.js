@@ -108,7 +108,7 @@ class SingleAnswer extends _Test{
 
         for(let i of this.answers){
             answersString += `
-             <div class="form__block">
+             <div class="form__block" data-block-answ-id="${i.id}">
                 <input class="sin-an__input" type="radio" name="${this.id}-answ" id="sin-an-${i.id}" data-answ-id="${i.id}" ${selectedAnswerId == i.id ? "checked" : ""}>
                 <label for="sin-an-${i.id}" class="sin-an__answer">${i.answer}</label>
             </div>`
@@ -493,6 +493,13 @@ class Answer{
 }
 
 
+/**
+ * Selecting with hardcoding: 
+ * - Running (data-answ-id)
+ * -- 
+ */
+
+
 
 const mathTestsArray = [
     {
@@ -527,7 +534,8 @@ const mathTestsArray = [
     {
         type:1,
         question:"Знайдіть площу даного правильного 4D торуса, якщо його радіус дорівнює 23.45",
-        answers:["2345","302,392.75950625","Я не склав","1,758.75"]
+        answers:["2345","302,392.75950625","Я не склав","1,758.75"],
+        img:"static/imgs/Tests/Maths/6.png"
     },
     {
         type:1,
@@ -801,3 +809,60 @@ document.querySelector("#popup__finish-test").addEventListener("click", async (e
 document.querySelector("#popup__hide").addEventListener("click",(event)=>{
     document.querySelector("#popup__timer").classList.toggle("hidden")
 })
+
+class MovingAnswer{
+    constructor(elem){
+        this.element = elem;
+        this.container = document.getElementById("test__main")
+        document.addEventListener("mousemove",this.trackCursor.bind(this))
+
+        this.blockX = this.element.getBoundingClientRect().x ;
+        this.blockY = this.element.getBoundingClientRect().y;
+    }
+
+    trackCursor(event){
+        this.blockX = this.element.getBoundingClientRect().x ;
+        this.blockY = this.element.getBoundingClientRect().y;
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+
+        const dx = this.blockX - mouseX; 
+        const dy = this.blockY - mouseY;
+
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const threshold = 200;
+
+        if (distance < threshold) {
+
+            const force = (threshold - distance) / 10; 
+
+            const angle = Math.atan2(dy, dx);
+            const offsetX = Math.cos(angle) * force;
+            const offsetY = Math.sin(angle) * force;
+
+            console.log(angle,offsetX,offsetY)
+
+            this.blockX += offsetX;
+            this.blockY += offsetY;
+
+            let containerRect = this.container.getBoundingClientRect();
+
+            const maxX = containerRect.width + containerRect.x - 200;
+            const maxY = containerRect.height + containerRect.y - 200;
+
+            this.blockX = Math.min(Math.max(containerRect.x + 50, this.blockX), maxX);
+            this.blockY = Math.min(Math.max(containerRect.y + 50, this.blockY), maxY);
+
+
+
+            this.element.classList.add("running")
+            this.element.style.left = this.blockX + "px";
+            this.element.style.top = this.blockY + "px";
+        }
+
+    }
+
+    
+}
+
+new MovingAnswer(document.querySelector(`[data-block-answ-id="1"]`))

@@ -153,6 +153,15 @@ main{
                                         border-color: $redNormal;
                                     }
                                 }
+                                .form__block{
+                                    position: relative;
+                                    transition: 0.5s all ease;
+                                    &.running{
+                                        display: inline-flex;
+                                        z-index: 3;
+                                        background-color: #fff;
+                                    }
+                                }
                             }
                         }
 

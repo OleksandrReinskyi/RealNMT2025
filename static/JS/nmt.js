@@ -37,6 +37,7 @@ const main = document.querySelector("main");
 document.addEventListener("click",async (event)=>{
     let target = event.target;
     if(target.classList.contains("test__next")){
+        console.log("test__next")
         testBlocks.forEach((item)=>{
             item.classList.remove("active")
         })
@@ -92,7 +93,6 @@ document.querySelector("#captcha__button").addEventListener("click",(event)=>{
     }
     packShown++;
     for(let i = 0; i<headerPacks.length; i++){
-        console.log(headerPacks[i])
         if(packShown == i){
             headerPacks[i].classList.add("active")
             bodyPacks[i].classList.add("active")
