@@ -95,6 +95,8 @@ main{
                             #captcha__checkbox{
                                 width: 30px;
                                 height: 30px;
+                                position: relative;
+                                right: -2px;
                                 border: 2px solid #000;
                                 background-color: #fff;
                                 margin-right:10px ;
@@ -114,7 +116,7 @@ main{
                                     background-image: url("../imgs/Page/captchaCheck.png");
                                     animation-play-state: running;
                                     border: none;
-                                    background-color: none;
+                                    background-color: transparent;
 
                                 }
                                 &.warning{
@@ -293,11 +295,29 @@ main{
                     &.active{
                         display: flex;
                     }
-                    #start__button{
-                        @extend %actionButton;
-                        font-size: 20px;
-                        font-weight: bold;
+                    form{
+                        >*{
+                            margin-bottom: 20px;
+                        }
+                        #form__block-code{
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            input{
+                                margin-left: 10px;
+                                @extend %input;
+                                font-size: 18px;
+                                flex-grow: 1;
+                            }
+                        }
+                        
+                        #start__button{
+                            @extend %actionButton;
+                            font-size: 18px;
+                            font-weight: bold;
+                        }
                     }
+
                 }
             }
             #instr{

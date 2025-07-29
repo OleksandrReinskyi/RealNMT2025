@@ -34,38 +34,41 @@ document.addEventListener("mouseup",sosavUp)
 
 const main = document.querySelector("main");
 
+async function moveToNextBlock(){
+    testBlocks.forEach((item)=>{
+        item.classList.remove("active")
+    })
+    testBlocks[confirmationIndex].classList.add("active");
+    confirmationIndex++;
+    if(confirmationIndex == testBlocks.length){
+
+        await wait(2000);
+        
+        main.classList.add("hidden");
+
+        await wait(750) 
+        main.classList.remove("hidden")
+
+        await wait(1000)
+        queueMicrotask(()=>{
+            for(let i = 0; i<250000;i++){
+                console.log(i)
+            }
+        })
+        
+        await wait(250) 
+        document.querySelector("body").innerHTML = `
+        <h1 id="global-error">Помилка 502: сервер знизу!</h1>
+        `
+        await wait(3000)
+        window.location.href = window.location.href.replace(/\/[^\/]*$/, "/test");
+    }
+}
+
 document.addEventListener("click",async (event)=>{
     let target = event.target;
     if(target.classList.contains("test__next")){
-        console.log("test__next")
-        testBlocks.forEach((item)=>{
-            item.classList.remove("active")
-        })
-        testBlocks[confirmationIndex].classList.add("active");
-        confirmationIndex++;
-        if(confirmationIndex == testBlocks.length){
-
-            await wait(2000);
-            
-            main.classList.add("hidden");
-
-            await wait(750) 
-            main.classList.remove("hidden")
-
-            await wait(1000)
-            queueMicrotask(()=>{
-                for(let i = 0; i<250000;i++){
-                    console.log(i)
-                }
-            })
-            
-            await wait(250) 
-            document.querySelector("body").innerHTML = `
-            <h1 id="global-error">Помилка 502: сервер знизу!</h1>
-            `
-            await wait(3000)
-            window.location.href = window.location.href.replace(/\/[^\/]*$/, "/test");
-        }
+        moveToNextBlock()
     }
 
     let imageNum = target.getAttribute("data-imgnum");
@@ -109,9 +112,19 @@ document.querySelector("#confirmation__button").addEventListener("click",(event)
     }
 })
 
-document.querySelector("#captcha__checkbox").addEventListener("click",(event)=>{
+let captchaCheckboxFunc = (event)=>{
     document.querySelector("#captcha__container").classList.add("active");
     headerPacks[packShown].classList.add("active")
     bodyPacks[packShown].classList.add("active")
     event.target.classList.add("active");
+    document.querySelector("#captcha__checkbox").removeEventListener("click",captchaCheckboxFunc)
+}
+
+document.querySelector("#captcha__checkbox").addEventListener("click",captchaCheckboxFunc)
+
+document.querySelector("#start__button").addEventListener("click",(event)=>{
+    let value = document.querySelector("#start__input").value;
+    if(value == "75640883.14!2348((*9461%000022344-"){
+        moveToNextBlock()
+    }
 })

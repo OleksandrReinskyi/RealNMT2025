@@ -511,6 +511,16 @@ const mathTestsArray = [
     },
     {
         type:1,
+        question:"Комп’ютерна мишка рухається прямолінійно об табуретку за законом \\(S(t) = t^2 + 5t + 1\\) (t вимірюється в секундах, S - у метрах). Визначте швидкість його руху в момент часу \\(t = 4\\) c.",
+        answers:["27м/c","10м/c","13м/c","134513463456м/с"]
+    },
+    {
+        type:1,
+        question:"Назар дістав з рюкзака цілий бутерброд. До нього підійшов Діма та вкусив цей бутерброд. Скільки відсотків бутерброду залишилося?",
+        answers:["88%","46%","12%","-6% (без пальців)"]
+    },
+        {
+        type:1,
         question:"",
         answers:[""],
         img:"static/imgs/Tests/Maths/2.png"
@@ -520,16 +530,6 @@ const mathTestsArray = [
         question:"",
         answers:["1","15%","67cm","Не відповідати"],
         img:"static/imgs/Tests/Maths/3.png"
-    },
-    {
-        type:1,
-        question:"Комп’ютерна мишка рухається прямолінійно об табуретку за законом \\(S(t) = t^2 + 5t + 1\\) (t вимірюється в секундах, S - у метрах). Визначте швидкість його руху в момент часу \\(t = 4\\) c.",
-        answers:["27м/c","10м/c","13м/c","134513463456м/с"]
-    },
-    {
-        type:1,
-        question:"Назар дістав з рюкзака цілий бутерброд. До нього підійшов Діма та вкусив цей бутерброд. Скільки відсотків бутерброду залишилося?",
-        answers:["88%","46%","12%","-6% (без пальців)"]
     },
     {
         type:1,
@@ -791,7 +791,6 @@ document.addEventListener("click",(event)=>{
 document.querySelector("#popup__finish-test").addEventListener("click", async (event)=>{
     let historyLength = Object.keys(JSON.parse(localStorage.getItem(histBlock.id))).length;
     let mathLength = Object.keys(JSON.parse(localStorage.getItem(mathBlock.id))).length;
-    console.log(historyLength,mathLength)
     
     if(historyLength == histTestsArray.length && mathLength == mathTestsArray.length){
         await Helpers.waitRandTime(2000);
@@ -814,17 +813,41 @@ class MovingAnswer{
     constructor(elem){
         this.element = elem;
         this.container = document.getElementById("test__main")
+
         document.addEventListener("mousemove",this.trackCursor.bind(this))
 
-        this.blockX = this.element.getBoundingClientRect().x ;
-        this.blockY = this.element.getBoundingClientRect().y;
-    }
+        this.element.addEventListener("mouseover",this.sprint.bind(this))
 
+        this.element.addEventListener("mouseover",this.start.bind(this))
+
+        this.blockX = this.element.offsetLeft ;
+        this.blockY = this.element.offsetTop ;
+
+        this.additionalPxX = 0;
+        this.additionalPxY = 0;
+        
+        this.running = false;
+        this.wasRunned = false;
+        this.speedDecreasing = false;
+        this.canBeStopped = false; 
+
+        this.increment = 1;
+
+        this.sprints = 2;
+    }
+    
     trackCursor(event){
-        this.blockX = this.element.getBoundingClientRect().x ;
-        this.blockY = this.element.getBoundingClientRect().y;
-        const mouseX = event.clientX;
-        const mouseY = event.clientY;
+
+
+        if(!this.running) return false;
+        if(!this.canBeStopped){
+            this.canBeStopped = true;
+            setTimeout(()=>{
+                this.element.addEventListener("click",this.stop.bind(this))
+            },500)
+        }
+        const mouseX = event.clientX + window.scrollX;
+        const mouseY = event.clientY + window.scrollY;
 
         const dx = this.blockX - mouseX; 
         const dy = this.blockY - mouseY;
@@ -834,32 +857,112 @@ class MovingAnswer{
 
         if (distance < threshold) {
 
-            const force = (threshold - distance) / 10; 
+            const force = (threshold - distance) / this.increment; 
 
             const angle = Math.atan2(dy, dx);
-            const offsetX = Math.cos(angle) * force;
-            const offsetY = Math.sin(angle) * force;
 
-            console.log(angle,offsetX,offsetY)
+            let additionalX = Math.cos(angle) * this.additionalPxX;
+            let additionalY = Math.sin(angle) * this.additionalPxY;
+
+            let containerRect = this.container.getBoundingClientRect();
+
+            const maxX = containerRect.width + containerRect.x - 50;
+            const maxY = 700 + containerRect.y;
+
+            const minY = containerRect.y;
+            const minX = containerRect.x;
+
+
+            if((this.blockX + additionalX)>maxX || (this.blockX + additionalX)<minX) { 
+                additionalX = additionalX * (-10);
+            }
+
+            if((this.blockY + additionalY)<minY) additionalY = additionalY * (-10);
+
+
+
+            const offsetX = Math.cos(angle) * force + additionalX;
+            const offsetY = Math.sin(angle) * force + additionalY ;
+            
+            this.additionalPxX = 0
+            this.additionalPxY = 0
+
+
 
             this.blockX += offsetX;
             this.blockY += offsetY;
 
-            let containerRect = this.container.getBoundingClientRect();
-
-            const maxX = containerRect.width + containerRect.x - 200;
-            const maxY = containerRect.height + containerRect.y - 200;
-
-            this.blockX = Math.min(Math.max(containerRect.x + 50, this.blockX), maxX);
-            this.blockY = Math.min(Math.max(containerRect.y + 50, this.blockY), maxY);
+            this.blockX = Math.min(Math.max(minX, this.blockX), maxX);
+            this.blockY = Math.min(Math.max(minY, this.blockY), maxY);
 
 
 
-            this.element.classList.add("running")
+
             this.element.style.left = this.blockX + "px";
             this.element.style.top = this.blockY + "px";
+            if(!this.speedDecreasing){
+                this.speedDecreasing = true;
+                setTimeout(()=>{
+                    this.increment += 0.05
+                    this.speedDecreasing = false
+                },100)
+            }
+
         }
 
+    }
+    
+    sprint(event){
+
+        if(this.increment>3 || this.sprints == 0){
+            this.additionalPxX = 0;
+            this.additionalPxY = 0;
+        }else{
+            this.additionalPxX = 50;
+            this.additionalPxY = 50;
+        }
+
+    }
+
+    start(event){
+        if(!this.running && !this.wasRunned){
+                this.wasRunned = true;
+            setTimeout(()=>{
+                this.running = true;
+
+                this.element.classList.add("running")
+                this.element.insertAdjacentHTML("beforeend",`<img src="static/imgs/Page/troll.png" style="position:absolute;width:100%;height:100%;top:0;left:0">`)
+                this.blockX += 10
+                this.blockY += 10
+                this.element.style.left = this.blockX + "px";
+                this.element.style.top = this.blockY + "px";
+            },500)
+
+
+        }
+    }
+
+    async stop(event){
+        if(!this.running){
+            event.preventDefault();
+            return
+        }
+        if(this.sprints!=0){
+            this.blockX += Math.random()*100;
+            this.blockY += Math.random()*100;
+
+            this.element.style.left = this.blockX + "px";
+            this.element.style.top = this.blockY + "px";
+            this.sprints -=1
+            return;
+            
+        }
+
+        this.running = false;
+        this.element.style.left = "0px";
+        this.element.style.top = "0px";
+        this.element.classList.remove("running")
+        this.element.querySelector("img").remove()
     }
 
     

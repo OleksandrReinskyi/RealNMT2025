@@ -37,3 +37,8 @@ $globalContainerWidth: 82vw;
     border: 1px solid $borderGrey;
     padding: 10px;
 }
+
+%input{
+    border: 1px solid $borderGrey;
+    padding: 5px 10px;
+}

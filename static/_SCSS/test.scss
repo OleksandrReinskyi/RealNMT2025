@@ -142,7 +142,6 @@ main{
                                     input{
                                         margin-right: 10px;
                                         cursor: pointer;
-
                                     }
                                     label{
                                         width: 100%;
@@ -155,11 +154,19 @@ main{
                                 }
                                 .form__block{
                                     position: relative;
-                                    transition: 0.5s all ease;
+                                    transition: 0.5s left ease;
+                                    transition: 0.5s top ease;
+
                                     &.running{
+
+                                        position: absolute;
                                         display: inline-flex;
                                         z-index: 3;
-                                        background-color: #fff;
+                                        background-image: url("../imgs/Page/troll.png");
+                                        background-position: center;
+                                        background-size: contain;
+                                        background-repeat: no-repeat;
+                                        background-color: #fff
                                     }
                                 }
                             }
@@ -167,8 +174,7 @@ main{
 
                         .open-an{
                             .open-an__input{
-                                border: 1px solid $borderGrey;
-                                padding: 5px 10px;
+                                @extend %input;
                             }
                             .open-an__latex{
                                 display: inline-block;

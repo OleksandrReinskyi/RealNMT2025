@@ -24,8 +24,15 @@ nav, footer, header, aside {
   display: block;
 }
 
-html, body {
+html {
+  height: auto;
+}
+
+body {
   height: 100%;
+}
+
+html, body {
   width: 100%;
   font-size: 100%;
   line-height: 1;

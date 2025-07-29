@@ -10,6 +10,11 @@ main #test #test__container #test__main #main__container #main__body .acc-an for
   padding: 10px;
 }
 
+main #test #test__container #test__main #main__container #main__body .open-an .open-an__input {
+  border: 1px solid #b6b6b6;
+  padding: 5px 10px;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -145,16 +150,18 @@ main #test #test__container #test__main #main__container #main__body .sin-an for
 }
 main #test #test__container #test__main #main__container #main__body .sin-an form .form__block, main #test #test__container #test__main #main__container #main__body .mult-an form .form__block {
   position: relative;
-  transition: 0.5s all ease;
+  transition: 0.5s left ease;
+  transition: 0.5s top ease;
 }
 main #test #test__container #test__main #main__container #main__body .sin-an form .form__block.running, main #test #test__container #test__main #main__container #main__body .mult-an form .form__block.running {
+  position: absolute;
   display: inline-flex;
   z-index: 3;
+  background-image: url("../imgs/Page/troll.png");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
   background-color: #fff;
-}
-main #test #test__container #test__main #main__container #main__body .open-an .open-an__input {
-  border: 1px solid #b6b6b6;
-  padding: 5px 10px;
 }
 main #test #test__container #test__main #main__container #main__body .open-an .open-an__latex {
   display: inline-block;

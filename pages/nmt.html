@@ -34,10 +34,10 @@ js:
                     </div>
                 </div>
                 <div id="test__confirmation" class="test__block" data-num="2"> 
-                    <h1>Тест "НМТ-2025" обмежений у часісімасісі (2 години)</h1>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus error reiciendis voluptatum voluptates. Incidunt quas iste, aliquam quia voluptatem maiores, repellendus tempore ut iusto dignissimos consequatur deserunt aperiam cumque! Tempore sunt minus repudiandae. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil, optio?</p>
-                    <p>Accusantium distinctio at magni, doloribus ipsa fugiat laborum dolore rerum, omnis officiis, qui iusto laboriosam id. Quod sed eum eveniet repellat odit obcaecati neque praesentium ea commodi dolore? Eveniet eligendi autem reiciendis iste! Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus quas esse consectetur explicabo. Cumque provident magni harum totam expedita laboriosam?</p>
-                    <p>Velit accusantium delectus ipsum minima id laboriosam? Asperiores modi earum odit alias culpa suscipit numquam perferendis beatae. Adipisci voluptatem nemo voluptates fugit in. Consequuntur repellendus, tempore laboriosam rerum ex corrupti non alias laudantium?</p>
+                    <h1>Тест "НМТ-2025" обмежений у часісімасісі ({randint:Math.random()})</h1>
+                    <p>Національний мультипредметний тест (НМТ) містить завдання з 2 навчальних предметів, під час складання яких на основній сесії НМТ Ви списували  (математика, Історія України)</p>
+                    <p>На виконання завдань з усіх предметів відведено {randint:Math.random()} хвилин. Ви можете самі розподіляти час між предметами, головне стежте за таймером, який показує, скільки залишилося хвилин до завершення роботи над НМТ.</p>
+                    <p>Як тільки Ви натиснете на кнопку «Розпочати роботу над тестом», автоматично розпочнеться відлік часу, відведеного на виконання тестових завдань</p>
                     <div id="confirmation__captcha"> 
                         <div id="captcha__block">
                             <div id="captcha__checkbox" ></div>
@@ -104,7 +104,16 @@ js:
                 
                 </div>
                 <div id="test__start" class="test__block " data-num="3">
-                    <button id="start__button" class="test__next">На пацана розпочати роботу над тестом</button>
+                    <form action="" onclick="return false">
+                        <div class="form__block" id="form__block-code">
+                            <h1>Код: </h1>
+                            <input id="start__input" type="text">
+                        </div>
+                        <div class="form__block">
+                            <button id="start__button" >На пацана розпочати роботу над тестом</button>
+                        </div>
+                    </form>
+
                 </div>
                 <div id="test__loading" class="test__block" data-num="4">
                     <h1>Завантаження ...</h1>

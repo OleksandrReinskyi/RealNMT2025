@@ -1,8 +1,13 @@
 @charset "UTF-8";
-main #tabs #tabs__body #test #test__header #header__controls #test__button, main #tabs #tabs__body #test #test__start #start__button, main #tabs #tabs__body #instr #instr__buttons button {
+main #tabs #tabs__body #test #test__header #header__controls #test__button, main #tabs #tabs__body #test #test__start form #start__button, main #tabs #tabs__body #instr #instr__buttons button {
   background-color: #e21c49;
   color: #fff;
   padding: 7px 15px;
+}
+
+main #tabs #tabs__body #test #test__start form #form__block-code input {
+  border: 1px solid #b6b6b6;
+  padding: 5px 10px;
 }
 
 main #tabs {
@@ -88,6 +93,8 @@ main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha
 main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__block #captcha__checkbox {
   width: 30px;
   height: 30px;
+  position: relative;
+  right: -2px;
   border: 2px solid #000;
   background-color: #fff;
   margin-right: 10px;
@@ -107,7 +114,7 @@ main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha
   background-image: url("../imgs/Page/captchaCheck.png");
   animation-play-state: running;
   border: none;
-  background-color: none;
+  background-color: transparent;
 }
 main #tabs #tabs__body #test #test__confirmation #confirmation__captcha #captcha__block #captcha__checkbox.warning {
   border-color: #e21c49;
@@ -266,8 +273,21 @@ main #tabs #tabs__body #test #test__start {
 main #tabs #tabs__body #test #test__start.active {
   display: flex;
 }
-main #tabs #tabs__body #test #test__start #start__button {
-  font-size: 20px;
+main #tabs #tabs__body #test #test__start form > * {
+  margin-bottom: 20px;
+}
+main #tabs #tabs__body #test #test__start form #form__block-code {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+main #tabs #tabs__body #test #test__start form #form__block-code input {
+  margin-left: 10px;
+  font-size: 18px;
+  flex-grow: 1;
+}
+main #tabs #tabs__body #test #test__start form #start__button {
+  font-size: 18px;
   font-weight: bold;
 }
 main #tabs #tabs__body #instr {
