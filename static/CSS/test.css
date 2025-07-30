@@ -1,4 +1,4 @@
-main #test #test__container #test__main #main__container #main__body .test-block form .form__block:last-child button, main #global-popup #popup__container #popup__controls #popup__finish-test, main #global-popup #popup__container #popup__controls #popup__hide {
+main #test #test__container #test__main #main__container #main__body .test-block form .form__block:last-child button, main #global-popup #popup__container #popup__controls #popup__finish-test, main #global-popup #popup__container #popup__controls #popup__hide, #add__beton #beton__close {
   background-color: #e21c49;
   color: #fff;
   padding: 7px 15px;
@@ -22,6 +22,38 @@ html {
 body.died {
   overflow: hidden;
   pointer-events: none;
+}
+
+#body__container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+#body__container .add__side {
+  width: 10vw;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#body__container .add__side .add__img {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+#body__container .add__side .add__img.active {
+  display: block;
+}
+#body__container .add__side .add__loading {
+  width: 30%;
+  object-fit: contain;
+}
+#body__container .add__side .add__loading.hidden {
+  display: none;
 }
 
 main #test {
@@ -150,8 +182,8 @@ main #test #test__container #test__main #main__container #main__body .sin-an for
 }
 main #test #test__container #test__main #main__container #main__body .sin-an form .form__block, main #test #test__container #test__main #main__container #main__body .mult-an form .form__block {
   position: relative;
-  transition: 0.5s left ease;
-  transition: 0.5s top ease;
+  transition: 1s left ease;
+  transition: 1s top ease;
 }
 main #test #test__container #test__main #main__container #main__body .sin-an form .form__block.running, main #test #test__container #test__main #main__container #main__body .mult-an form .form__block.running {
   position: absolute;
@@ -258,6 +290,53 @@ main #test #test__container #test__main #main__container #main__body .acc-an for
 }
 main #test #test__container #test__main #main__container #main__body .acc-an form .form__body .acc-an__answers .acc-an__answer.active {
   background-color: #dde2dc;
+}
+main #test #test__container #test__main #main__container #main__body div.dissapearing.test-block.main__block {
+  margin-bottom: 100vh;
+  position: relative;
+  transition: all 4s ease;
+}
+main #test #test__container #test__main #main__container #main__body div.dissapearing.test-block.main__block #dissapearing__message {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e0e7e7;
+  border-left: 3px solid #e21c49;
+  transition: all 0.5s ease;
+}
+main #test #test__container #test__main #main__container #main__body div.dissapearing.test-block.main__block #dissapearing__message.active {
+  opacity: 100%;
+  pointer-events: all;
+}
+main #test #test__container #test__main #main__container #main__body div.dissapearing.test-block.main__block #dissapearing__message p {
+  font-size: 20px;
+  padding: 30px 30px;
+}
+main #test #test__container #test__main #main__container #main__body div.dissapearing.test-block.main__block.vanish {
+  animation-name: dissapear;
+  animation-timing-function: ease;
+  animation-duration: 2s;
+  animation-delay: 0s;
+  animation-fill-mode: forwards;
+  animation-direction: normal;
+}
+@keyframes dissapear {
+  0% {
+    opacity: 100%;
+  }
+  100% {
+    height: 0px;
+    transform: scale(0.3);
+    opacity: 0%;
+    margin-bottom: 0px;
+  }
 }
 main #test #test__container #test__main, main #test #test__container #test__side {
   padding: 10px;
@@ -376,6 +455,99 @@ main #main__loading.hidden {
 }
 main #main__loading img {
   width: 50px;
+}
+
+#add__beton {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  display: none;
+}
+#add__beton.active {
+  display: flex;
+}
+#add__beton.active #beton__vid-container {
+  background-color: #fff;
+}
+#add__beton.active #beton__vid-container #beton__banner #beton__container p {
+  animation-timing-function: ease;
+  animation-name: slideText;
+  animation-delay: 1s;
+  animation-duration: 15s;
+  animation-fill-mode: forwards;
+}
+#add__beton #beton__vid-container {
+  position: relative;
+  width: 98%;
+  height: 98%;
+  border: 3px solid #e21c49;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#add__beton #beton__vid-container .add__loading {
+  width: 5%;
+  height: auto;
+}
+#add__beton #beton__vid-container .add__loading.hidden {
+  display: none;
+}
+#add__beton #beton__vid-container video {
+  width: 100%;
+  object-fit: fill;
+  height: 100%;
+  display: none;
+}
+#add__beton #beton__vid-container video.active {
+  display: block;
+}
+#add__beton #beton__vid-container #beton__banner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #e21c49;
+  color: #fff;
+  font-size: 20px;
+  line-break: none;
+}
+#add__beton #beton__vid-container #beton__banner #beton__container {
+  margin: 20px 10px;
+  overflow: hidden;
+}
+#add__beton #beton__vid-container #beton__banner p {
+  position: relative;
+  width: max-content;
+}
+@keyframes slideText {
+  from {
+    left: 0px;
+  }
+  to {
+    left: -7359px;
+  }
+}
+#add__beton #beton__close {
+  position: absolute;
+  right: 10px;
+  bottom: 50px;
+  font-size: 18px;
+}
+#add__beton #beton__info {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 25px;
+  background-color: #e21c49;
+  color: #fff;
+  width: 100%;
+  padding: 15px 30px;
+  font-weight: bold;
 }
 
 /*# sourceMappingURL=test.css.map */

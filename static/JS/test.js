@@ -19,7 +19,15 @@ class Helpers{
         timer.continue()
 
     }
+
+    static wait(ms){
+        return new Promise((res,rej)=>{
+            setTimeout(res,ms)
+        })
+    }
 }
+
+
 
 class Timer{
     constructor(time,elem){
@@ -97,9 +105,10 @@ class _Test{
 }
 
 class SingleAnswer extends _Test{
-    constructor(question,answers,imgPath,audioPath){
+    constructor(question,answers,imgPath,audioPath,extraClass){
         super(question,imgPath,audioPath);
         this.answers = answers;
+        this.extraClass = extraClass
     }
 
     renderView(index,selectedAnswerId){
@@ -115,7 +124,7 @@ class SingleAnswer extends _Test{
         }
 
         this.view += `
-        <div class="main__block test-block sin-an" id="test-block__${this.id}" data-test-id="${this.id}">
+        <div class="main__block test-block sin-an ${this.extraClass} " id="test-block__${this.id} " data-test-id="${this.id}">
             <h1 class="question__number">Завдання ${index+1}</h1>
             ${this.questionInfo}
             <form  class="sin-an__form" onsubmit="return false">
@@ -438,7 +447,7 @@ class _TestsArr{
                 for(let answer of i.answers){
                     answers.push(new Answer(answer))
                 }
-                question = new SingleAnswer(i.question,answers,i.img,i.audio);
+                question = new SingleAnswer(i.question,answers,i.img,i.audio,i.classes||"");
             }else if(i.type == 2){
                 question = new OpenAnswer(i.question,i.img)
             }else if(i.type==5){
@@ -522,7 +531,11 @@ const mathTestsArray = [
         {
         type:1,
         question:"",
-        answers:[""],
+        answers:["\\(\\frac{1}{\\pi^2 * \\sqrt{e}}\\)","\\(\\sum_{i=1}^{2n}y^i\\)","\\(\\int \\cos \\theta \\,d\\theta = \\sin \\theta.\\)",`\\(\\frac{\\partial u}{\\partial t}
+   = h^2 \\left( \\frac{\\partial^2 u}{\\partial x^2}
+      + \\frac{\\partial^2 u}{\\partial y^2}
+      + \\frac{\\partial^2 u}{\\partial z^2} \\right) \\)`],
+        classes:"dissapearing",
         img:"static/imgs/Tests/Maths/2.png"
     },
     {
@@ -578,7 +591,8 @@ const histTestsArray = [
             "Станцювати голим на столі",
             "Почати позувати без футболки біля дошки на відео",
             "Зробити сайт їдальні школи"
-        ]
+        ],
+        classes:"sideAds"
     },
     {
         "type": 1,
@@ -598,7 +612,7 @@ const histTestsArray = [
             "“Піднятий шекель”",
             "“Туалет - вікно”",
             "“Похід на Екватор”"
-        ]
+        ],
     },
     {
         "type": 1,
@@ -648,7 +662,9 @@ const histTestsArray = [
             "Кочові племена, які проживали на території України в 2 ст.",
             "Очільники ЛДНР",
             "You know…"
-        ]
+        ],
+        classes:"allAdds"
+
     },
     {
         "type": 1,
@@ -675,7 +691,7 @@ const histTestsArray = [
         question: "За наступним аудіозаписом визначіть задукоментовану історичну подію",
         answers:["Варшавський інцидент “постріл”","Підготовка до операції “Капкан: Єремія”","Трагедія під ліжком","Операція “Suntago: прозора гірка”"],
         img: null,
-        audio:"static/imgs/Tests/History/SpookySound.mp3"
+        audio:"static/imgs/Tests/History/SpookySound.wav"
     },
     {
         type:5,
@@ -819,13 +835,16 @@ class MovingAnswer{
         this.element.addEventListener("mouseover",this.sprint.bind(this))
 
         this.element.addEventListener("mouseover",this.start.bind(this))
+        this.element.addEventListener("click",this.ignoreFirstClick.bind(this))
 
         this.blockX = this.element.offsetLeft ;
         this.blockY = this.element.offsetTop ;
 
         this.additionalPxX = 0;
         this.additionalPxY = 0;
-        
+
+        this.startMs = 2000;
+
         this.running = false;
         this.wasRunned = false;
         this.speedDecreasing = false;
@@ -833,7 +852,8 @@ class MovingAnswer{
 
         this.increment = 1;
 
-        this.sprints = 2;
+        this.sprints = 3;
+        this.audio = new Audio();
     }
     
     trackCursor(event){
@@ -844,7 +864,7 @@ class MovingAnswer{
             this.canBeStopped = true;
             setTimeout(()=>{
                 this.element.addEventListener("click",this.stop.bind(this))
-            },500)
+            },this.startMs)
         }
         const mouseX = event.clientX + window.scrollX;
         const mouseY = event.clientY + window.scrollY;
@@ -853,11 +873,11 @@ class MovingAnswer{
         const dy = this.blockY - mouseY;
 
         const distance = Math.sqrt(dx * dx + dy * dy);
-        const threshold = 200;
+        const threshold = 300;
 
         if (distance < threshold) {
 
-            const force = (threshold - distance) / this.increment; 
+            const force = (threshold - distance)  / this.increment; 
 
             const angle = Math.atan2(dy, dx);
 
@@ -874,10 +894,20 @@ class MovingAnswer{
 
 
             if((this.blockX + additionalX)>maxX || (this.blockX + additionalX)<minX) { 
-                additionalX = additionalX * (-10);
+                additionalX = additionalX * (-8);
+                if(this.audio.ended){
+                    this.audio.src = "/static/imgs/Tests/Maths/sprint.ogg"
+                    this.audio.play()
+                }
             }
 
-            if((this.blockY + additionalY)<minY) additionalY = additionalY * (-10);
+            if((this.blockY + additionalY)<minY){
+                if(this.audio.ended){
+                    this.audio.src = "/static/imgs/Tests/Maths/sprint.ogg"
+                    this.audio.play()
+                }
+                additionalY = additionalY * (-8);
+            } 
 
 
 
@@ -900,6 +930,7 @@ class MovingAnswer{
 
             this.element.style.left = this.blockX + "px";
             this.element.style.top = this.blockY + "px";
+            
             if(!this.speedDecreasing){
                 this.speedDecreasing = true;
                 setTimeout(()=>{
@@ -912,14 +943,19 @@ class MovingAnswer{
 
     }
     
+    ignoreFirstClick(event){
+        if(!this.canBeStopped) event.preventDefault()
+    }
+
     sprint(event){
 
-        if(this.increment>3 || this.sprints == 0){
-            this.additionalPxX = 0;
-            this.additionalPxY = 0;
+        if(this.increment>5 || this.sprints == 0){
+            this.additionalPxX = 10;
+            this.additionalPxY = 10;
         }else{
-            this.additionalPxX = 50;
-            this.additionalPxY = 50;
+            this.additionalPxX = 70;
+            this.additionalPxY = 70;
+
         }
 
     }
@@ -930,27 +966,33 @@ class MovingAnswer{
             setTimeout(()=>{
                 this.running = true;
 
+                this.audio.src = "/static/imgs/Tests/Maths/start.ogg"
+                this.audio.play()
+
                 this.element.classList.add("running")
                 this.element.insertAdjacentHTML("beforeend",`<img src="static/imgs/Page/troll.png" style="position:absolute;width:100%;height:100%;top:0;left:0">`)
                 this.blockX += 10
                 this.blockY += 10
                 this.element.style.left = this.blockX + "px";
                 this.element.style.top = this.blockY + "px";
-            },500)
+            },this.startMs)
 
 
         }
     }
 
     async stop(event){
-        if(!this.running){
+        if(!this.running && !this.wasRunned){
             event.preventDefault();
             return
         }
         if(this.sprints!=0){
-            this.blockX += Math.random()*100;
-            this.blockY += Math.random()*100;
-
+            this.blockX += Math.random()*200;
+            this.blockY += Math.random()*200;
+            if(this.audio.ended){
+                this.audio.src = "/static/imgs/Tests/Maths/sprint.ogg"
+                this.audio.play()
+            }
             this.element.style.left = this.blockX + "px";
             this.element.style.top = this.blockY + "px";
             this.sprints -=1
@@ -968,4 +1010,113 @@ class MovingAnswer{
     
 }
 
-new MovingAnswer(document.querySelector(`[data-block-answ-id="1"]`))
+
+
+
+class DissapearingBlock{
+    constructor(elem){
+        this.element = elem;
+        document.addEventListener("scroll",this.trackViewPort.bind(this));
+        this.y = this.element.offsetTop;
+        this.messageShown = false;
+         this.element.insertAdjacentHTML("beforeend",`<div id="dissapearing__message"> <p>Це був прикол, LoL! 😂</p></div>`)
+    }
+
+    trackViewPort(event){
+        if(this.messageShown) return;
+        let neededHeight = window.scrollY + window.innerHeight/2
+
+        if(this.y <= neededHeight) {
+            this.showMessage()
+            this.messageShown =true;
+        }
+    }
+    async showMessage(){
+        await Helpers.wait(5000)
+        this.element.querySelector("#dissapearing__message").classList.add("active")
+        await Helpers.wait(3000);
+        this.element.classList.add("vanish")
+        let height = this.element.offsetHeight;
+        this.element.style.height = height + "px"
+        await Helpers.wait(2000);
+        this.element.style.display = "none"
+    }
+}
+
+class AdsAppear{
+    constructor(elem){
+        this.element = elem;
+        document.addEventListener("scroll",this.trackViewPort.bind(this));
+        this.y = this.element.offsetTop;
+        this.messageShown = false;
+
+    }
+    trackViewPort(){
+        if(this.element.checkVisibility()) this.y = this.element.offsetTop;
+        if(this.messageShown) return;
+        let neededHeight = window.scrollY + window.innerHeight/2
+
+        if(this.y <= neededHeight && this.element.checkVisibility()) {
+            this.showAdds()
+            this.messageShown = true;
+        }
+    }
+
+
+
+}
+
+class sideAdds extends AdsAppear{
+    constructor(elem){
+        super(elem);
+    }
+    async showAdds(){
+        let ads = Array.from(document.querySelectorAll(".add__side"));
+        ads.forEach(element => {
+            element.insertAdjacentHTML("beforeend",`<img class="add__loading" src = "static/imgs/Page/loading-waiting.gif" style="width=100%;height=100%">`)
+        });
+        await Helpers.waitRandTime(7000);
+
+        ads.forEach(element=>{
+            element.querySelector(".add__loading").classList.add("hidden");
+            element.querySelector(".add__img").classList.add("active")
+        })
+    }
+}
+
+class mainAdds{
+    constructor(elem){
+        elem.addEventListener("click",this.showAdds.bind(this));
+        this.messageShown = false;
+        
+    }
+    async showAdds(){
+        if(this.messageShown) return;
+        let add = document.querySelector("#add__beton")
+        let video = add.querySelector("video");
+        add.classList.add("active");
+        add.querySelector("#beton__vid-container").insertAdjacentHTML("beforeend",`<img class="add__loading" src = "static/imgs/Page/loading-waiting.gif" style="width=5%;">`)
+
+        await Helpers.wait(1000);
+
+        add.querySelector(".add__loading").classList.add("hidden");
+
+        video.classList.add("active")
+        video.play()
+
+        video.addEventListener("ended",async ()=>{
+            await Helpers.wait(2000)
+            add.classList.remove("active")
+            this.messageShown = true;
+        })
+
+    }
+}
+
+document.addEventListener("DOMContentLoaded",(event)=>{
+    new DissapearingBlock(document.querySelector(".dissapearing"));
+    new MovingAnswer(document.querySelector(`[data-block-answ-id="1"]`))
+    new sideAdds(document.querySelector(".sideAds"))
+    new mainAdds(document.querySelector(".allAdds").querySelector(".an__save"))
+
+})

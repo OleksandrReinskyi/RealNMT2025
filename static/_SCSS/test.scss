@@ -9,6 +9,40 @@ body{
         overflow: hidden;
         pointer-events: none;
     }
+
+}
+ 
+#body__container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    .add__side{
+            width: 10vw;
+            height: 100vh;
+            position: sticky;
+            top:0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        .add__img{    
+            display: none;
+            &.active{
+                display: block;
+            }
+            width: 100%;
+
+            height: 100%;
+            object-fit: fill;
+        }
+        .add__loading{
+            &.hidden{
+                display: none;
+            }
+            width: 30%;
+            object-fit: contain;
+        }
+    }
 }
 
 main{
@@ -154,8 +188,8 @@ main{
                                 }
                                 .form__block{
                                     position: relative;
-                                    transition: 0.5s left ease;
-                                    transition: 0.5s top ease;
+                                    transition: 1s left ease;
+                                    transition: 1s top ease;
 
                                     &.running{
 
@@ -286,10 +320,60 @@ main{
                                 }
                             }
                         }
+                          div.dissapearing.test-block.main__block{
+                            margin-bottom: 100vh; 
+                            position: relative;
+                            transition: all 4s ease;
+                            #dissapearing__message{
+                                opacity: 0;
+                                pointer-events: none;
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                width: 100%; 
+                                height: 100%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                background-color: $popupGrey;
+                                border-left: 3px solid $redNormal;
+                                transition: all 0.5s ease;
+                                &.active{
+                                    opacity: 100%;
+                                    pointer-events: all;
+                                }
+                                p{
+                                    font-size: 20px;
+                                    padding: 30px 30px;
+                                }
+                            }
+                            &.vanish{
+                                animation-name: dissapear;
+                                animation-timing-function: ease;
+                                animation-duration: 2s;
+                                animation-delay: 0s;
+                                animation-fill-mode: forwards;
+                                animation-direction: normal;
+
+                            }
+
+                            @keyframes dissapear {
+                                0%{
+                                    opacity: 100%;
+                                }
+                                100%{
+                                    height: 0px;
+                                    transform: scale(0.3);
+                                    opacity: 0%;
+                                    margin-bottom: 0px;
+                                }
+                            }
+                        }
                     } 
                 }
-            }
 
+            }
+          
             #test__main,#test__side{
                 padding: 10px;
                 border: 2px solid $borderGrey;
@@ -422,5 +506,107 @@ main{
         img{
             width: 50px;
         }
+    }
+}
+
+#add__beton{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    z-index: 4;
+    display: none;
+    &.active{
+        display: flex;
+        #beton__vid-container{
+            background-color: #fff;
+            #beton__banner{
+                #beton__container{
+                    p{
+                         animation-timing-function: ease;
+                        animation-name: slideText;
+                        animation-delay: 1s;
+                        animation-duration:15s ;
+                        animation-fill-mode: forwards;
+                    }
+                }
+            }
+        }
+    }
+    #beton__vid-container{
+        position: relative;
+        width: 98%;
+        height: 98%;
+        border: 3px solid $redNormal;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .add__loading{
+            &.hidden{
+                display: none;
+            }
+            width: 5%;
+            height: auto;
+        }
+        video{
+            width: 100%;
+            object-fit: fill;
+            height: 100%;
+            display: none;
+            &.active{
+                display: block;
+            }
+        }
+        #beton__banner{
+            #beton__container{
+                margin: 20px 10px;
+                overflow: hidden;
+            }
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: $redNormal;
+            color: #fff;
+            font-size: 20px;
+            line-break: none;
+            p{
+                position: relative;
+                width: max-content;
+            }
+            
+            @keyframes slideText {
+                from{
+                    left: 0px;
+
+                }
+                to{
+                    left: -7359px;
+                }
+            }
+        }
+    }
+    #beton__close{
+        position: absolute;
+        right: 10px;
+        bottom: 50px;
+        @extend %actionButton;
+        font-size: 18px;
+    }
+
+    #beton__info{
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 25px;
+        background-color: $redNormal;
+        color:#fff;
+        width: 100%;
+        padding: 15px 30px;
+        font-weight: bold;
+        
     }
 }
