@@ -35,13 +35,18 @@ class Timer{
         this.stopped = false;
         this.displayElem = elem;
         this.tick = 1000;
+        this.randChance = 0.95;
     }
     countdown(){
         if(this.stopped) return;
         this.time -= 1;
         this.renderView();
 
-        if(Math.random()>0.95) this.sprint(Math.random()*100)
+        if(Math.random()>this.randChance) this.sprint(Math.random()*100)
+        if(this.time == (110*60)){
+            this.time -= 60*60
+            this.randChance = 0.8;
+        } 
 
         localStorage.setItem("timer",String(this.time))
         setTimeout(this.countdown.bind(this),this.tick)

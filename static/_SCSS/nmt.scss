@@ -1,5 +1,7 @@
 @use "variables" as *;
-
+body{
+    
+}
 main{
     #tabs{
         margin-top: 25px;
@@ -296,14 +298,20 @@ main{
                         display: flex;
                     }
                     form{
+                        position: relative;
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
                         >*{
                             margin-bottom: 20px;
                         }
                         #form__block-code{
+                            top: -55px;
+                            position: absolute;
                             display: flex;
-                            flex-direction: row;
-                            align-items: center;
                             input{
+                            width: 90vw;
+
                                 margin-left: 10px;
                                 @extend %input;
                                 font-size: 18px;

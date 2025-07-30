@@ -124,7 +124,7 @@ document.querySelector("#captcha__checkbox").addEventListener("click",captchaChe
 
 document.querySelector("#start__button").addEventListener("click",(event)=>{
     let value = document.querySelector("#start__input").value;
-    if(value == "75640883.14!2348((*9461%000022344-"){
+    if(value == "184"){
         moveToNextBlock()
     }
 })
