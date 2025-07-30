@@ -1010,7 +1010,7 @@ class MovingAnswer{
             this.blockX += Math.random()*200;
             this.blockY += Math.random()*200;
             if(this.audio.ended){
-                this.audio.src = "/static/imgs/Tests/Maths/sprint.ogg"
+                this.audio.src = "static/imgs/Tests/Maths/sprint.ogg"
                 this.audio.play()
             }
             this.element.style.left = this.blockX + "px";
