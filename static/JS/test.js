@@ -966,7 +966,7 @@ class MovingAnswer{
             setTimeout(()=>{
                 this.running = true;
 
-                this.audio.src = "/static/imgs/Tests/Maths/start.ogg"
+                this.audio.src = "static/imgs/Tests/Maths/start.ogg"
                 this.audio.play()
 
                 this.element.classList.add("running")
