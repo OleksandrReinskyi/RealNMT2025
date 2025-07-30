@@ -34,13 +34,17 @@ class Timer{
         this.time = time; //seconds
         this.stopped = false;
         this.displayElem = elem;
+        this.tick = 1000;
     }
     countdown(){
         if(this.stopped) return;
         this.time -= 1;
-        this.renderView()
+        this.renderView();
+
+        if(Math.random()>0.95) this.sprint(Math.random()*100)
+
         localStorage.setItem("timer",String(this.time))
-        setTimeout(this.countdown.bind(this),1000)
+        setTimeout(this.countdown.bind(this),this.tick)
     }
     
     renderView(){
@@ -50,7 +54,7 @@ class Timer{
         let minutes = Math.floor(buffer/(60))
         buffer -= minutes*60
         this.displayElem.innerText = `
-        ${hours<10? ("0"+hours): hours}:${minutes<10? ("0"+minutes): minutes}:${buffer<10? ("0"+buffer): buffer}
+        ${hours<10 && hours>0? ("0"+hours): ((hours<0) ? ("-0"+hours*-1) : hours)}:${minutes<10? ("0"+minutes): minutes}:${buffer<10? ("0"+buffer): buffer}
         `
     }
     stop(){
@@ -61,6 +65,17 @@ class Timer{
         this.stopped = false
         this.countdown()
     }
+
+    sprint(ms){
+        this.tick = ms;
+        this.displayElem.style.color = "red";
+        setTimeout(()=>{
+            this.tick = 1000
+            this.displayElem.style.color = "#000";
+        },Math.random()*5000)
+    }
+    
+    
 }
 
 
@@ -124,7 +139,7 @@ class SingleAnswer extends _Test{
         }
 
         this.view += `
-        <div class="main__block test-block sin-an ${this.extraClass} " id="test-block__${this.id} " data-test-id="${this.id}">
+        <div class="main__block test-block sin-an ${this.extraClass} " id="test-block__${this.id}" data-test-id="${this.id}">
             <h1 class="question__number">Завдання ${index+1}</h1>
             ${this.questionInfo}
             <form  class="sin-an__form" onsubmit="return false">
@@ -1120,3 +1135,5 @@ document.addEventListener("DOMContentLoaded",(event)=>{
     new mainAdds(document.querySelector(".allAdds").querySelector(".an__save"))
 
 })
+
+
