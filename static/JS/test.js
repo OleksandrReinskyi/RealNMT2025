@@ -896,14 +896,14 @@ class MovingAnswer{
             if((this.blockX + additionalX)>maxX || (this.blockX + additionalX)<minX) { 
                 additionalX = additionalX * (-8);
                 if(this.audio.ended){
-                    this.audio.src = "/static/imgs/Tests/Maths/sprint.ogg"
+                    this.audio.src = "static/imgs/Tests/Maths/sprint.ogg"
                     this.audio.play()
                 }
             }
 
             if((this.blockY + additionalY)<minY){
                 if(this.audio.ended){
-                    this.audio.src = "/static/imgs/Tests/Maths/sprint.ogg"
+                    this.audio.src = "static/imgs/Tests/Maths/sprint.ogg"
                     this.audio.play()
                 }
                 additionalY = additionalY * (-8);
